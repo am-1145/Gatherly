@@ -22,6 +22,7 @@ import { Badge } from '../components/common/Badge';
 import { useEvent } from '../context/EventContext';
 import { EventWizardModal } from '../components/wizard/EventWizardModal';
 import { parseNaturalLanguageEvent, generateEventFromDraft } from '../utils/naturalLanguageParser';
+import { generateEventWithGemini, getActiveGeminiApiKey } from '../services/ai/geminiService';
 import { formatCurrency } from '../utils/formatters';
 
 export const LandingPage: React.FC = () => {
@@ -32,9 +33,29 @@ export const LandingPage: React.FC = () => {
   );
   const [isWizardOpen, setIsWizardOpen] = useState(false);
 
-  const handleInstantPlan = (e: React.FormEvent) => {
+  const [isInstantPlanning, setIsInstantPlanning] = useState(false);
+
+  const handleInstantPlan = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!prompt.trim()) return;
+    if (!prompt.trim() || isInstantPlanning) return;
+
+    const apiKey = getActiveGeminiApiKey();
+    if (apiKey) {
+      setIsInstantPlanning(true);
+      try {
+        const geminiEvent = await generateEventWithGemini(prompt, apiKey);
+        if (geminiEvent) {
+          createEvent(geminiEvent);
+          navigate('/app');
+          return;
+        }
+      } catch (err) {
+        console.warn('Gemini planning failed, falling back to local generator:', err);
+      } finally {
+        setIsInstantPlanning(false);
+      }
+    }
+
     const parsed = parseNaturalLanguageEvent(prompt);
     const newEvent = generateEventFromDraft(parsed);
     createEvent(newEvent);
@@ -152,8 +173,9 @@ export const LandingPage: React.FC = () => {
                   size="md"
                   className="w-full sm:w-auto font-semibold"
                   leftIcon={<Sparkles className="w-4 h-4" />}
+                  isLoading={isInstantPlanning}
                 >
-                  Assemble My Workspace
+                  {isInstantPlanning ? 'Gemini is Synthesizing...' : 'Assemble My Workspace'}
                 </Button>
               </div>
             </div>

@@ -44,3 +44,4 @@ export interface AISettings {
   model: string;
   temperature: number;
 }
+

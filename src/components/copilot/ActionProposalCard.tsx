@@ -76,3 +76,4 @@ export const ActionProposalCard: React.FC<ActionProposalCardProps> = ({ proposal
     </div>
   );
 };
+

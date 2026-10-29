@@ -103,11 +103,10 @@ export const Header: React.FC<HeaderProps> = ({
                         setActiveEventId(ev.id);
                         setIsEventMenuOpen(false);
                       }}
-                      className={`w-full flex items-center justify-between p-2.5 rounded-lg text-left transition-colors ${
-                        ev.id === activeEventId
+                      className={`w-full flex items-center justify-between p-2.5 rounded-lg text-left transition-colors ${ev.id === activeEventId
                           ? 'bg-sage-50 dark:bg-sage-950/40 text-sage-900 dark:text-sage-100 font-semibold'
                           : 'hover:bg-ivory-100 dark:hover:bg-charcoal-800 text-charcoal-800 dark:text-charcoal-200'
-                      }`}
+                        }`}
                     >
                       <div className="truncate pr-2">
                         <p className="text-xs truncate">{ev.title}</p>
@@ -192,3 +191,4 @@ export const Header: React.FC<HeaderProps> = ({
     </>
   );
 };
+

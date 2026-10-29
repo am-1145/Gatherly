@@ -560,3 +560,4 @@ export const INITIAL_DEMO_EVENTS: EventModel[] = [
     updatedAt: '2026-10-20T14:00:00.000Z',
   },
 ];
+

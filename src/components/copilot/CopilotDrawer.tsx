@@ -45,3 +45,4 @@ export const CopilotDrawer: React.FC<CopilotDrawerProps> = ({ isOpen, onClose })
     </div>
   );
 };
+

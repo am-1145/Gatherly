@@ -87,11 +87,10 @@ export const EventsPage: React.FC = () => {
             <Card
               key={ev.id}
               padding="lg"
-              className={`flex flex-col justify-between transition-all text-left relative ${
-                isActive
+              className={`flex flex-col justify-between transition-all text-left relative ${isActive
                   ? 'border-sage-500 ring-2 ring-sage-500/20 bg-white dark:bg-charcoal-900 shadow-elevated'
                   : 'hover:border-charcoal-400 dark:hover:border-charcoal-700'
-              }`}
+                }`}
             >
               <div>
                 <div className="flex items-start justify-between gap-2 mb-2">
@@ -226,3 +225,4 @@ export const EventsPage: React.FC = () => {
     </div>
   );
 };
+

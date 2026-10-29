@@ -102,9 +102,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <aside
-      className={`relative flex flex-col border-r border-ivory-200 dark:border-charcoal-800 bg-white/95 dark:bg-charcoal-900/95 backdrop-blur-md transition-all duration-300 z-30 select-none ${
-        isCollapsed ? 'w-16' : 'w-64'
-      }`}
+      className={`relative flex flex-col border-r border-ivory-200 dark:border-charcoal-800 bg-white/95 dark:bg-charcoal-900/95 backdrop-blur-md transition-all duration-300 z-30 select-none ${isCollapsed ? 'w-16' : 'w-64'
+        }`}
     >
       {/* Brand Header */}
       <div className="flex items-center justify-between px-4 h-16 border-b border-ivory-200 dark:border-charcoal-800 shrink-0">
@@ -131,9 +130,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className={`p-1.5 rounded-lg text-charcoal-400 hover:text-charcoal-700 dark:hover:text-charcoal-200 hover:bg-ivory-100 dark:hover:bg-charcoal-800 transition-colors ${
-            isCollapsed ? 'hidden' : 'block'
-          }`}
+          className={`p-1.5 rounded-lg text-charcoal-400 hover:text-charcoal-700 dark:hover:text-charcoal-200 hover:bg-ivory-100 dark:hover:bg-charcoal-800 transition-colors ${isCollapsed ? 'hidden' : 'block'
+            }`}
           title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           aria-label="Toggle sidebar"
         >
@@ -171,18 +169,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
               key={item.to}
               to={item.to}
               title={isCollapsed ? item.label : undefined}
-              className={`group flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 ${
-                isActive
+              className={`group flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 ${isActive
                   ? 'bg-sage-50 dark:bg-sage-950/40 text-sage-800 dark:text-sage-200 border border-sage-200/80 dark:border-sage-800/80 font-semibold'
                   : 'text-charcoal-600 dark:text-charcoal-400 hover:text-charcoal-900 dark:hover:text-charcoal-100 hover:bg-ivory-100/80 dark:hover:bg-charcoal-800/60'
-              } ${isCollapsed ? 'justify-center px-0' : ''}`}
+                } ${isCollapsed ? 'justify-center px-0' : ''}`}
             >
               <Icon
-                className={`w-4 h-4 shrink-0 transition-colors ${
-                  isActive
+                className={`w-4 h-4 shrink-0 transition-colors ${isActive
                     ? 'text-sage-700 dark:text-sage-300'
                     : 'text-charcoal-400 group-hover:text-charcoal-700 dark:group-hover:text-charcoal-200'
-                }`}
+                  }`}
               />
 
               {!isCollapsed && (
@@ -234,3 +230,4 @@ export const Sidebar: React.FC<SidebarProps> = ({
     </aside>
   );
 };
+

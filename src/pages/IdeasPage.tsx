@@ -116,11 +116,10 @@ export const IdeasPage: React.FC = () => {
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setOnlyFavorites(!onlyFavorites)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-              onlyFavorites
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${onlyFavorites
                 ? 'bg-red-50 border-red-300 text-red-700 dark:bg-red-950/50 dark:border-red-800 dark:text-red-300'
                 : 'bg-white dark:bg-charcoal-900 border-ivory-200 dark:border-charcoal-700 text-charcoal-600 dark:text-charcoal-400 hover:bg-ivory-100'
-            }`}
+              }`}
           >
             <Heart className={`w-3.5 h-3.5 ${onlyFavorites ? 'fill-current text-red-600' : ''}`} />
             <span>Favorites ({activeEvent.ideas.filter((i) => i.isFavorite).length})</span>
@@ -143,11 +142,10 @@ export const IdeasPage: React.FC = () => {
           <button
             key={cat.key}
             onClick={() => setSelectedCategory(cat.key)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-              selectedCategory === cat.key
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${selectedCategory === cat.key
                 ? 'bg-charcoal-900 text-ivory-50 dark:bg-ivory-100 dark:text-charcoal-900 shadow-subtle'
                 : 'text-charcoal-600 dark:text-charcoal-400 hover:bg-ivory-100 dark:hover:bg-charcoal-800'
-            }`}
+              }`}
           >
             {cat.label}
           </button>
@@ -178,9 +176,8 @@ export const IdeasPage: React.FC = () => {
                     title={idea.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
                   >
                     <Heart
-                      className={`w-4 h-4 ${
-                        idea.isFavorite ? 'fill-red-500 text-red-500' : ''
-                      }`}
+                      className={`w-4 h-4 ${idea.isFavorite ? 'fill-red-500 text-red-500' : ''
+                        }`}
                     />
                   </button>
                 </div>
@@ -338,3 +335,4 @@ export const IdeasPage: React.FC = () => {
     </div>
   );
 };
+

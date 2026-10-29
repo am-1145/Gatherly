@@ -13,7 +13,7 @@ export function formatCurrency(
   compact: boolean = false
 ): string {
   const symbol = CURRENCY_SYMBOLS[currency] || '₹';
-  
+
   if (isNaN(amount) || amount === null || amount === undefined) {
     return `${symbol}0`;
   }
@@ -75,7 +75,7 @@ export function getDaysRemaining(targetDate: string): {
 
   const target = new Date(targetDate);
   const now = new Date();
-  
+
   // Set both to midnight for exact calendar day comparison
   target.setHours(0, 0, 0, 0);
   now.setHours(0, 0, 0, 0);
@@ -106,3 +106,4 @@ export function formatPercent(value: number, total: number): number {
   const pct = Math.round((value / total) * 100);
   return Math.min(Math.max(pct, 0), 100);
 }
+

@@ -90,3 +90,4 @@ export function importBackupJSON(jsonStr: string): EventModel[] | null {
     return null;
   }
 }
+

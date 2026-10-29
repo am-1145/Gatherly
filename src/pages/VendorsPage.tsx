@@ -612,3 +612,4 @@ export const VendorsPage: React.FC = () => {
     </div>
   );
 };
+

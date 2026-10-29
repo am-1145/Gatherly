@@ -37,3 +37,4 @@ export const CopilotPage: React.FC = () => {
     </div>
   );
 };
+

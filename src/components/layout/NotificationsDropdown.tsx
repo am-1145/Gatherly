@@ -23,28 +23,28 @@ export const NotificationsDropdown: React.FC = () => {
   const notifications = [
     ...(metrics.isOverBudget
       ? [
-          {
-            id: 'n-budget-alert',
-            type: 'warning' as const,
-            title: 'Budget Allocation Warning',
-            message: `Allocated amounts exceed total budget by ${formatCurrency(
-              Math.abs(metrics.allocationVariance),
-              activeEvent?.budget.currency
-            )}.`,
-            time: 'Live calculation',
-          },
-        ]
+        {
+          id: 'n-budget-alert',
+          type: 'warning' as const,
+          title: 'Budget Allocation Warning',
+          message: `Allocated amounts exceed total budget by ${formatCurrency(
+            Math.abs(metrics.allocationVariance),
+            activeEvent?.budget.currency
+          )}.`,
+          time: 'Live calculation',
+        },
+      ]
       : []),
     ...(metrics.overdueTasks > 0
       ? [
-          {
-            id: 'n-tasks-overdue',
-            type: 'urgent' as const,
-            title: `${metrics.overdueTasks} Task(s) Past Due Date`,
-            message: 'Review pending vendor contracts and advance confirmations.',
-            time: 'Requires attention',
-          },
-        ]
+        {
+          id: 'n-tasks-overdue',
+          type: 'urgent' as const,
+          title: `${metrics.overdueTasks} Task(s) Past Due Date`,
+          message: 'Review pending vendor contracts and advance confirmations.',
+          time: 'Requires attention',
+        },
+      ]
       : []),
     {
       id: 'n-rsvp-update',
@@ -128,3 +128,4 @@ export const NotificationsDropdown: React.FC = () => {
     </div>
   );
 };
+

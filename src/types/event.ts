@@ -173,3 +173,4 @@ export interface EventModel {
   createdAt: string;
   updatedAt: string;
 }
+

@@ -722,3 +722,4 @@ export const BudgetPage: React.FC = () => {
     </div>
   );
 };
+

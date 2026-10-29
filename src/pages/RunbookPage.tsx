@@ -111,8 +111,8 @@ export const RunbookPage: React.FC = () => {
       item.status === 'completed'
         ? 'pending'
         : item.status === 'pending'
-        ? 'in_progress'
-        : 'completed';
+          ? 'in_progress'
+          : 'completed';
     updateRunbookItem({ ...item, status: nextStatus });
   };
 
@@ -166,11 +166,10 @@ export const RunbookPage: React.FC = () => {
           <button
             key={f}
             onClick={() => setSelectedFilter(f)}
-            className={`px-3 py-1 text-xs rounded-full font-semibold capitalize transition-all ${
-              selectedFilter === f
+            className={`px-3 py-1 text-xs rounded-full font-semibold capitalize transition-all ${selectedFilter === f
                 ? 'bg-charcoal-900 text-ivory-50 dark:bg-ivory-100 dark:text-charcoal-900 shadow-subtle'
                 : 'bg-ivory-100 dark:bg-charcoal-800 text-charcoal-600 dark:text-charcoal-400 hover:bg-ivory-200'
-            }`}
+              }`}
           >
             {f} ({sortedRunbook.filter((i) => f === 'all' || (f === 'pending' ? i.status !== 'completed' && i.status !== 'flagged' : i.status === f)).length})
           </button>
@@ -192,15 +191,14 @@ export const RunbookPage: React.FC = () => {
             return (
               <div
                 key={item.id}
-                className={`relative flex items-start gap-4 p-4 sm:p-5 rounded-2xl border transition-all ${
-                  isFlagged
+                className={`relative flex items-start gap-4 p-4 sm:p-5 rounded-2xl border transition-all ${isFlagged
                     ? 'bg-red-50/60 dark:bg-red-950/30 border-red-300 dark:border-red-900'
                     : isCompleted
-                    ? 'bg-ivory-50/70 dark:bg-charcoal-900/60 border-ivory-200 dark:border-charcoal-800 opacity-80'
-                    : isInProgress
-                    ? 'bg-amber-50/60 dark:bg-amber-950/30 border-amber-300 dark:border-amber-800 shadow-card'
-                    : 'bg-white dark:bg-charcoal-850 border-ivory-200 dark:border-charcoal-700 shadow-subtle'
-                }`}
+                      ? 'bg-ivory-50/70 dark:bg-charcoal-900/60 border-ivory-200 dark:border-charcoal-800 opacity-80'
+                      : isInProgress
+                        ? 'bg-amber-50/60 dark:bg-amber-950/30 border-amber-300 dark:border-amber-800 shadow-card'
+                        : 'bg-white dark:bg-charcoal-850 border-ivory-200 dark:border-charcoal-700 shadow-subtle'
+                  }`}
               >
                 {/* Time Badge Column */}
                 <div className="w-24 sm:w-28 shrink-0 text-left">
@@ -219,11 +217,10 @@ export const RunbookPage: React.FC = () => {
                 <div className="flex-1 min-w-0 text-left">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
                     <h3
-                      className={`text-sm sm:text-base font-bold ${
-                        isCompleted
+                      className={`text-sm sm:text-base font-bold ${isCompleted
                           ? 'line-through text-charcoal-400'
                           : 'text-charcoal-900 dark:text-ivory-50'
-                      }`}
+                        }`}
                     >
                       {item.title}
                     </h3>
@@ -232,10 +229,10 @@ export const RunbookPage: React.FC = () => {
                         isCompleted
                           ? 'sage'
                           : isFlagged
-                          ? 'red'
-                          : isInProgress
-                          ? 'amber'
-                          : 'neutral'
+                            ? 'red'
+                            : isInProgress
+                              ? 'amber'
+                              : 'neutral'
                       }
                       size="sm"
                     >
@@ -267,11 +264,10 @@ export const RunbookPage: React.FC = () => {
                 <div className="flex items-center gap-1.5 shrink-0">
                   <button
                     onClick={() => toggleFlagIssue(item)}
-                    className={`p-2 rounded-lg transition-colors ${
-                      isFlagged
+                    className={`p-2 rounded-lg transition-colors ${isFlagged
                         ? 'bg-red-600 text-white'
                         : 'text-charcoal-400 hover:text-red-500 hover:bg-ivory-100 dark:hover:bg-charcoal-800'
-                    }`}
+                      }`}
                     title={isFlagged ? 'Resolve issue flag' : 'Flag an urgent delay/issue'}
                   >
                     <Flag className="w-4 h-4" />
@@ -279,11 +275,10 @@ export const RunbookPage: React.FC = () => {
 
                   <button
                     onClick={() => toggleStatus(item)}
-                    className={`p-2 rounded-lg font-semibold text-xs flex items-center gap-1 transition-all ${
-                      isCompleted
+                    className={`p-2 rounded-lg font-semibold text-xs flex items-center gap-1 transition-all ${isCompleted
                         ? 'bg-sage-600 text-white'
                         : 'bg-ivory-200 hover:bg-sage-100 dark:bg-charcoal-700 text-charcoal-700 dark:text-ivory-100 hover:text-sage-800'
-                    }`}
+                      }`}
                     title="Toggle progress status"
                   >
                     <CheckCircle2 className="w-4 h-4" />
@@ -393,3 +388,4 @@ export const RunbookPage: React.FC = () => {
     </div>
   );
 };
+

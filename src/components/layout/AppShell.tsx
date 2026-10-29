@@ -47,7 +47,7 @@ export const AppShell: React.FC = () => {
             </div>
             <Sidebar
               isCollapsed={false}
-              setIsCollapsed={() => {}}
+              setIsCollapsed={() => { }}
               onOpenCreateWizard={() => {
                 setIsMobileMenuOpen(false);
                 setIsWizardOpen(true);
@@ -89,3 +89,4 @@ export const AppShell: React.FC = () => {
     </div>
   );
 };
+

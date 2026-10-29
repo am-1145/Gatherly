@@ -64,7 +64,6 @@ export function parseNaturalLanguageEvent(prompt: string): ParsedEventDraft {
   if (guestMatch) {
     guestCount = parseInt(guestMatch[1], 10);
   } else {
-    // Check solitary numbers if near words like 'for 80'
     const forMatch = prompt.match(/for\s+(\d+)\b/i);
     if (forMatch) {
       guestCount = parseInt(forMatch[1], 10);
@@ -105,26 +104,68 @@ export function parseNaturalLanguageEvent(prompt: string): ParsedEventDraft {
     assumptions.push(`Budget was estimated at ${currency} ${budgetTotal.toLocaleString()} based on ${occasion} standards.`);
   }
 
-  // 4. Extract Location / City
-  let city = 'Bengaluru';
-  const cityMatch = prompt.match(/\b(?:in|at)\s+([A-Z][a-zA-Z\s]{2,20})\b/);
-  if (cityMatch) {
-    const candidate = cityMatch[1].trim();
-    // Filter out common false positives
-    const stopWords = ['a', 'the', 'december', 'november', 'october', 'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'evening', 'morning', 'afternoon'];
-    if (!stopWords.includes(candidate.toLowerCase())) {
-      city = candidate;
+  // 4. Extract Location / City (NEVER default to Bangalore unless specified!)
+  let city: string | null = null;
+
+  // Check known major destinations first (case-insensitive)
+  const knownCities: Record<string, string> = {
+    bangalore: 'Bengaluru',
+    bengaluru: 'Bengaluru',
+    indiranagar: 'Indiranagar, Bengaluru',
+    koramangala: 'Koramangala, Bengaluru',
+    mumbai: 'Mumbai',
+    delhi: 'New Delhi',
+    'new delhi': 'New Delhi',
+    jaipur: 'Jaipur',
+    udaipur: 'Udaipur',
+    goa: 'Goa',
+    'south goa': 'South Goa',
+    'north goa': 'North Goa',
+    hyderabad: 'Hyderabad',
+    chennai: 'Chennai',
+    kolkata: 'Kolkata',
+    pune: 'Pune',
+    ahmedabad: 'Ahmedabad',
+    paris: 'Paris',
+    london: 'London',
+    'new york': 'New York',
+    nyc: 'New York',
+    dubai: 'Dubai',
+    singapore: 'Singapore',
+    tokyo: 'Tokyo',
+    chicago: 'Chicago',
+    toronto: 'Toronto',
+    bali: 'Bali',
+    amsterdam: 'Amsterdam',
+    sydney: 'Sydney',
+    rome: 'Rome',
+  };
+
+  for (const [key, standardName] of Object.entries(knownCities)) {
+    const cityRegex = new RegExp(`\\b${key}\\b`, 'i');
+    if (cityRegex.test(text)) {
+      city = standardName;
+      break;
     }
-  } else {
-    if (text.includes('bangalore') || text.includes('bengaluru')) city = 'Bengaluru';
-    else if (text.includes('mumbai')) city = 'Mumbai';
-    else if (text.includes('delhi')) city = 'New Delhi';
-    else if (text.includes('jaipur')) city = 'Jaipur';
-    else if (text.includes('goa')) city = 'Goa';
-    else if (text.includes('hyderabad')) city = 'Hyderabad';
-    else if (text.includes('new york') || text.includes('nyc')) city = 'New York';
-    else if (text.includes('london')) city = 'London';
-    else assumptions.push(`City not detected; defaulting to ${city}.`);
+  }
+
+  // If not in known list, use dynamic preposition matching: "in [Location]" or "at [Location]"
+  if (!city) {
+    const locMatch = prompt.match(/\b(?:in|at|around|near|destination\s+is)\s+([A-Za-z][A-Za-z\s]{1,25})(?=[,.]|\s+(?:with|for|on|having|budget|during|having|within)\b|$)/i);
+    if (locMatch) {
+      const candidate = locMatch[1].trim();
+      const stopWords = ['a', 'an', 'the', 'my', 'our', 'december', 'november', 'october', 'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'evening', 'morning', 'afternoon', 'night', 'hotel', 'hall', 'venue', 'advance'];
+      if (!stopWords.includes(candidate.toLowerCase()) && candidate.length > 2) {
+        // Capitalize words
+        city = candidate.replace(/\b\w/g, (c) => c.toUpperCase());
+      }
+    }
+  }
+
+  // If STILL no location detected, DO NOT assume Bangalore! Mark as Location TBD
+  if (!city) {
+    city = 'Location TBD';
+    assumptions.push('Location was not specified in prompt; marked as Location TBD.');
   }
 
   // 5. Date calculation (Default to 45 days from today)
@@ -140,6 +181,7 @@ export function parseNaturalLanguageEvent(prompt: string): ParsedEventDraft {
   else if (text.includes('rustic') || text.includes('boho')) theme = 'Bohemian Rustic';
   else if (text.includes('neon') || text.includes('party')) theme = 'Neon Glow & Electric Beats';
   else if (text.includes('minimalist') || text.includes('clean')) theme = 'Minimalist Luxe';
+  else if (text.includes('beach') || text.includes('coastal')) theme = 'Coastal Tropical Sunset';
 
   let foodPreferences = 'Multi-cuisine appetizers & plated dinner';
   if (text.includes('veg') && !text.includes('non-veg')) foodPreferences = 'Pure Vegetarian gourmet spread';
@@ -152,7 +194,7 @@ export function parseNaturalLanguageEvent(prompt: string): ParsedEventDraft {
     entertainment += ' + interactive party games & photo booth';
   }
 
-  const title = `${city} ${titleOccasion}`;
+  const title = city !== 'Location TBD' ? `${city} ${titleOccasion}` : `My ${titleOccasion}`;
 
   return {
     title,
@@ -229,7 +271,7 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
     {
       id: `exp-3`,
       categoryKey: 'Decoration',
-      name: `${draft.theme} backdrop & floral centerpieces`,
+      name: `${draft.theme} backdrop & floral arrangements`,
       estimatedAmount: Math.round(categories[2].allocatedAmount * 0.6),
       actualAmount: 0,
       isPaid: false,
@@ -252,16 +294,18 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
     return d.toISOString().split('T')[0];
   };
 
+  const locationContext = draft.city !== 'Location TBD' ? `in ${draft.city}` : 'for celebration';
+
   const tasks: TaskItem[] = [
     {
       id: `task-1`,
-      title: `Finalize venue contract in ${draft.city}`,
+      title: `Finalize venue contract ${locationContext}`,
       category: 'Bookings',
       priority: 'urgent',
       status: 'pending',
       dueDate: formatDateOffset(35),
       assignee: 'You',
-      notes: 'Check sound curfew and in-house catering policies',
+      notes: 'Check sound curfew, air conditioning, and in-house catering policies',
     },
     {
       id: `task-2`,
@@ -275,7 +319,7 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
     },
     {
       id: `task-3`,
-      title: `Send digital save-the-dates & RSVPs`,
+      title: `Send digital save-the-dates & RSVP links`,
       category: 'Invitations',
       priority: 'high',
       status: 'pending',
@@ -285,7 +329,7 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
     },
     {
       id: `task-4`,
-      title: `Approve decor moodboard & entrance floral arch`,
+      title: `Approve decor moodboard & entrance design`,
       category: 'Planning',
       priority: 'medium',
       status: 'pending',
@@ -325,32 +369,42 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
     },
   ];
 
-  // Initial realistic sample vendors
+  // Dynamic vendor naming adapted to the city
+  const venueTitle =
+    draft.city !== 'Location TBD'
+      ? `${draft.city} Grand Skyline Terrace & Hall`
+      : 'Elegance Grand Celebration Terrace';
+
+  const catererTitle =
+    draft.city !== 'Location TBD'
+      ? `${draft.city} Culinary Crafters`
+      : 'Artisan Culinary Crafters';
+
   const vendors: VendorItem[] = [
     {
       id: `ven-1`,
-      name: `${draft.city} Skyline Terrace & Banquet`,
+      name: venueTitle,
       category: 'Venue',
       status: 'shortlisted',
-      contactName: 'Vikram Malhotra',
+      contactName: 'Venue Manager',
       phone: '+91 98450 12345',
-      email: 'events@skylineterrace.in',
+      email: 'events@celebrationvenue.in',
       rating: 4.8,
       quotation: {
         price: Math.round(categories[0].allocatedAmount * 0.95),
-        includedServices: ['Main hall & open deck for 6 hours', 'Basic ambient lighting & round tables', 'Dedicated event manager'],
+        includedServices: ['Main hall & open deck for 6 hours', 'Basic ambient lighting & round tables', 'Dedicated event coordinator'],
         exclusions: ['DJ sound equipment', 'Alcohol corkage fee', 'Valet parking'],
         paymentTerms: '40% advance on booking, 60% morning of event',
       },
-      notes: 'Has great outdoor views and backup power generator.',
+      notes: 'Offers backup power generator and flexible seating arrangements.',
       isVerifiedSample: true,
     },
     {
       id: `ven-2`,
-      name: 'Artisan Culinary Crafters',
+      name: catererTitle,
       category: 'Catering',
       status: 'shortlisted',
-      contactName: 'Chef Ananya Sharma',
+      contactName: 'Executive Chef',
       phone: '+91 97412 88900',
       email: 'chef@artisancrafters.com',
       rating: 4.9,
@@ -360,7 +414,7 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
         exclusions: ['Hard spirits', 'Extra hour service fee'],
         paymentTerms: '50% booking advance, 50% post-event completion',
       },
-      notes: 'Offers personalized mocktail tasting session before event.',
+      notes: 'Includes food tasting session prior to final menu sign-off.',
       isVerifiedSample: true,
     },
     {
@@ -368,13 +422,13 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
       name: 'Lumina Aesthetic Floral & Decors',
       category: 'Decoration',
       status: 'contacted',
-      contactName: 'Rohit Verma',
+      contactName: 'Creative Director',
       phone: '+91 99001 44556',
       email: 'hello@luminadecors.com',
       rating: 4.7,
       quotation: {
         price: Math.round(categories[2].allocatedAmount * 0.88),
-        includedServices: [`${draft.theme} customized backdrop`, 'Entry passage lighting', 'Fresh flower centerpieces on 10 tables'],
+        includedServices: [`${draft.theme} customized backdrop`, 'Entry passage lighting', 'Fresh centerpieces on guest tables'],
         exclusions: ['Custom neon signs', 'LED wall rentals'],
         paymentTerms: '30% advance, 70% upon installation',
       },
@@ -415,7 +469,7 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
       id: `idea-4`,
       title: 'Seed-Paper Thank You Cards & Plantable Favors',
       category: 'sustainable',
-      description: 'Handmade plantable wild-flower seed paper cards thanking guests for attending. Zero waste and creates lasting memories in their home gardens.',
+      description: 'Handmade plantable wild-flower seed paper cards thanking guests for attending. Zero waste and creates lasting memories.',
       estimatedCost: 2000,
       tags: ['Eco-friendly', 'Thoughtful', 'Budget'],
       isFavorite: false,
@@ -462,7 +516,6 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
       responsible: 'Greeter / Family',
       location: 'Entrance Foyer',
       status: 'pending',
-      notes: 'Distribute name tags or table cards if assigned',
     },
     {
       id: `rb-5`,
@@ -499,14 +552,14 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
     {
       id: `rec-1`,
       title: 'Lock Venue Advance within 7 days',
-      description: `In ${draft.city}, popular weekends get booked quickly. Secure your slot with ${vendors[0]?.name || 'the venue'}.`,
+      description: `Popular weekend dates get booked quickly. Secure your slot early with ${vendors[0]?.name || 'the venue'}.`,
       impact: 'high',
       category: 'vendor',
     },
     {
       id: `rec-2`,
       title: `Buffer 10% for Catering Overrun`,
-      description: `With ${draft.guestCount} guests, a buffer of ₹${Math.round(categories[1].allocatedAmount * 0.1).toLocaleString()} helps cover last-minute RSVP additions.`,
+      description: `With ${draft.guestCount} guests, a buffer of ${draft.currency} ${Math.round(categories[1].allocatedAmount * 0.1).toLocaleString()} helps cover last-minute RSVP additions.`,
       impact: 'medium',
       category: 'budget',
     },
@@ -526,7 +579,7 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
     date: draft.date,
     city: draft.city,
     venueStatus: 'searching',
-    venueName: `${draft.city} Skyline Terrace`,
+    venueName: venueTitle,
     guestCount: draft.guestCount,
     budget: {
       total,
@@ -564,14 +617,6 @@ export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
         diet: 'Vegan',
         plusOnes: 1,
         phone: '+91 99110 55667',
-      },
-      {
-        id: 'g-4',
-        name: 'Siddharth Varma',
-        group: 'VIP',
-        status: 'pending',
-        diet: 'Gluten-Free',
-        plusOnes: 0,
       },
     ],
     vendors,

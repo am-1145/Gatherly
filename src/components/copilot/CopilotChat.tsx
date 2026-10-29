@@ -15,6 +15,7 @@ import { ChatMessage, ChatSession } from '../../types';
 import { useEvent } from '../../context/EventContext';
 import { useSettings } from '../../context/SettingsContext';
 import { dispatchCopilotMessage } from '../../services/ai/aiDispatcher';
+import { getActiveGeminiApiKey, getActiveGeminiModel } from '../../services/ai/geminiService';
 import { MessageBubble } from './MessageBubble';
 import { Button } from '../common/Button';
 import { Badge } from '../common/Badge';
@@ -291,7 +292,12 @@ Ask me anything about trimming vendor costs, timeline checklists, or adjusting h
             <div className="p-2 rounded-lg bg-ivory-100 dark:bg-charcoal-800/80 text-[10px] text-charcoal-500 dark:text-charcoal-400 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-sage-600 shrink-0" />
               <span>
-                Engine: <strong>{aiMode === 'gemini_api' ? 'Gemini 1.5' : 'Local Deterministic'}</strong>
+                Engine:{' '}
+                <strong>
+                  {getActiveGeminiApiKey()
+                    ? `Google Gemini (${getActiveGeminiModel()})`
+                    : 'Local Deterministic'}
+                </strong>
               </span>
             </div>
           </div>
@@ -309,8 +315,8 @@ Ask me anything about trimming vendor costs, timeline checklists, or adjusting h
             <div>
               <p className="text-xs font-bold text-charcoal-900 dark:text-ivory-50 flex items-center gap-1.5">
                 <span>Gatherly Copilot</span>
-                <Badge variant="sage" size="sm">
-                  {aiMode === 'gemini_api' ? 'Live Gemini' : 'Offline Demo'}
+                <Badge variant={getActiveGeminiApiKey() ? 'sage' : 'neutral'} size="sm">
+                  {getActiveGeminiApiKey() ? 'Gemini 1.5 Active' : 'Offline Demo'}
                 </Badge>
               </p>
               <p className="text-[10px] text-charcoal-400 truncate">
@@ -416,3 +422,4 @@ Ask me anything about trimming vendor costs, timeline checklists, or adjusting h
     </div>
   );
 };
+

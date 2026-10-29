@@ -28,6 +28,7 @@ import {
   generateEventFromDraft,
   ParsedEventDraft,
 } from '../../utils/naturalLanguageParser';
+import { generateEventWithGemini, getActiveGeminiApiKey } from '../../services/ai/geminiService';
 import { formatCurrency } from '../../utils/formatters';
 
 interface EventWizardModalProps {
@@ -77,9 +78,32 @@ export const EventWizardModal: React.FC<EventWizardModalProps> = ({
   const [specialRequirements, setSpecialRequirements] = useState('');
   const [assumptions, setAssumptions] = useState<string[]>([]);
 
-  // Apply NL Parsing
-  const handleParseNaturalLanguage = () => {
-    if (!nlPrompt.trim()) return;
+  const [isParsingAI, setIsParsingAI] = useState(false);
+
+  // Apply NL Parsing (Using Real Gemini AI if Key is in .env, otherwise fast rule engine)
+  const handleParseNaturalLanguage = async () => {
+    if (!nlPrompt.trim() || isParsingAI) return;
+    const apiKey = getActiveGeminiApiKey();
+
+    if (apiKey) {
+      setIsParsingAI(true);
+      try {
+        const geminiEvent = await generateEventWithGemini(nlPrompt, apiKey);
+        if (geminiEvent) {
+          createEvent(geminiEvent);
+          confetti({ particleCount: 75, spread: 60, origin: { y: 0.6 } });
+          onClose();
+          navigate('/app');
+          return;
+        }
+      } catch (err) {
+        console.warn('Gemini generation failed, falling back to local parser:', err);
+      } finally {
+        setIsParsingAI(false);
+      }
+    }
+
+    // Default or fallback local parser
     const parsed: ParsedEventDraft = parseNaturalLanguageEvent(nlPrompt);
     setOccasion(parsed.occasion);
     setTitle(parsed.title);
@@ -252,9 +276,10 @@ export const EventWizardModal: React.FC<EventWizardModalProps> = ({
               variant="sage"
               size="sm"
               leftIcon={<Sparkles className="w-4 h-4" />}
+              isLoading={isParsingAI}
               onClick={handleParseNaturalLanguage}
             >
-              Parse & Generate Workspace
+              {isParsingAI ? 'Gemini AI is Planning...' : 'Parse & Generate Workspace'}
             </Button>
           </div>
         </div>
@@ -622,3 +647,4 @@ export const EventWizardModal: React.FC<EventWizardModalProps> = ({
     </Modal>
   );
 };
+
