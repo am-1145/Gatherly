@@ -4,7 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  VITE_GEMINI_MODEL = "gemini-3.6-flash"
+  SECRETS_SCAN_OMIT_KEYS = "VITE_GEMINI_MODEL"
 
 # SPA fallback — send all routes to index.html so React Router works
 [[redirects]]
