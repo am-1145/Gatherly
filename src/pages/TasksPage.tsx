@@ -1,15 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import {
-  CheckSquare,
   Plus,
   Search,
-  Filter,
-  Calendar,
-  User,
-  Clock,
   CheckCircle2,
   AlertCircle,
-  MoreVertical,
   Trash2,
   Edit2,
   Kanban,
@@ -57,12 +51,11 @@ export const TasksPage: React.FC = () => {
   const [taskAssignee, setTaskAssignee] = useState('');
   const [taskNotes, setTaskNotes] = useState('');
 
-  if (!activeEvent) return null;
-
   const todayStr = new Date().toISOString().split('T')[0];
 
   const filteredTasks = useMemo(() => {
-    return activeEvent.tasks.filter((task) => {
+    const list = activeEvent?.tasks || [];
+    return list.filter((task) => {
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         if (
@@ -77,7 +70,9 @@ export const TasksPage: React.FC = () => {
       if (selectedPriority !== 'All' && task.priority !== selectedPriority) return false;
       return true;
     });
-  }, [activeEvent.tasks, searchQuery, selectedCategory, selectedStatus, selectedPriority]);
+  }, [activeEvent?.tasks, searchQuery, selectedCategory, selectedStatus, selectedPriority]);
+
+  if (!activeEvent) return null;
 
   const handleOpenCreate = () => {
     setEditingTask(null);

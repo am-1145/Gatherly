@@ -1,5 +1,5 @@
 import { EventModel, ActionProposal, ChatMessage } from '../../types';
-import { formatCurrency, formatDate } from '../../utils/formatters';
+import { formatDate } from '../../utils/formatters';
 
 export interface GeminiAnalysisResult {
   content: string;
@@ -67,7 +67,7 @@ Here is the LIVE FRONTEND EVENT STATE:
 - Expected Guest Count: ${event.guestCount} (${event.guests.filter((g) => g.status === 'confirmed').length} confirmed)
 - Budget: Total ${currency} ${totalBudget.toLocaleString()}, Allocated ${currency} ${allocated.toLocaleString()}, Paid ${currency} ${paid.toLocaleString()}, Remaining ${currency} ${(totalBudget - paid).toLocaleString()}
 - Categories: ${event.budget.categories.map((c) => `${c.name}: ${currency} ${c.allocatedAmount}`).join(', ')}
-- Pending Tasks (${pendingTasks.length}): ${pendingTasks.slice(0, 5).map((t) => `"${t.title}" (Due: ${t.dueDate})`).join(', ')}
+- Pending Tasks (${pendingTasks.length}, ${urgentTasks.length} urgent): ${pendingTasks.slice(0, 5).map((t) => `"${t.title}" (Due: ${t.dueDate})`).join(', ')}
 - Vendors: ${event.vendors.map((v) => `${v.name} (${v.category}, Quoted: ${currency} ${v.quotation.price}, Status: ${v.status})`).join('; ')}
 - Theme/Style: ${event.preferences.theme || 'None'}
 - Food Preferences: ${event.preferences.foodPreferences || 'None'}

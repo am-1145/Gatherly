@@ -7,15 +7,12 @@ import {
   Moon,
   Plus,
   Sparkles,
-  Calendar,
   Check,
 } from 'lucide-react';
 import { useEvent } from '../../context/EventContext';
 import { useSettings } from '../../context/SettingsContext';
 import { NotificationsDropdown } from './NotificationsDropdown';
 import { GlobalSearchModal } from './GlobalSearchModal';
-import { Button } from '../common/Button';
-import { Badge } from '../common/Badge';
 
 interface HeaderProps {
   onToggleMobileMenu: () => void;
@@ -74,6 +71,9 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative" ref={eventMenuRef}>
             <button
               onClick={() => setIsEventMenuOpen(!isEventMenuOpen)}
+              aria-haspopup="listbox"
+              aria-expanded={isEventMenuOpen}
+              aria-label="Select active event workspace"
               className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg border border-ivory-200 dark:border-charcoal-700/80 bg-ivory-50/80 dark:bg-charcoal-800/80 hover:bg-ivory-100 dark:hover:bg-charcoal-700 transition-colors text-left"
             >
               <div className="w-2 h-2 rounded-full bg-sage-500 animate-pulse" />
@@ -143,6 +143,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Quick Search trigger */}
           <button
             onClick={() => setIsSearchOpen(true)}
+            aria-label="Open search dialog"
             className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-charcoal-500 dark:text-charcoal-400 bg-ivory-100/70 dark:bg-charcoal-800/60 hover:bg-ivory-200/80 dark:hover:bg-charcoal-700 transition-colors border border-ivory-200/60 dark:border-charcoal-700/60"
           >
             <Search className="w-3.5 h-3.5" />
@@ -156,8 +157,9 @@ export const Header: React.FC<HeaderProps> = ({
           {onOpenCopilotDrawer && (
             <button
               onClick={onOpenCopilotDrawer}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-sage-50 dark:bg-sage-950/50 text-sage-700 dark:text-sage-300 border border-sage-200 dark:border-sage-800 hover:bg-sage-100 transition-colors"
+              aria-label="Open AI Copilot drawer"
               title="Open AI Copilot Drawer"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-sage-50 dark:bg-sage-950/50 text-sage-700 dark:text-sage-300 border border-sage-200 dark:border-sage-800 hover:bg-sage-100 transition-colors"
             >
               <Sparkles className="w-3.5 h-3.5 text-sage-600" />
               <span className="hidden lg:inline">Ask Copilot</span>

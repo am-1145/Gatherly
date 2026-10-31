@@ -1,10 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import {
-  Users,
   Plus,
   Search,
   Download,
-  Mail,
   MessageSquare,
   Check,
   Copy,
@@ -14,7 +12,6 @@ import {
   Clock,
   XCircle,
   HelpCircle,
-  UserCheck,
   Utensils,
 } from 'lucide-react';
 import { useEvent } from '../context/EventContext';
@@ -52,10 +49,9 @@ export const GuestsPage: React.FC = () => {
   const [tableOrArea, setTableOrArea] = useState('');
   const [notes, setNotes] = useState('');
 
-  if (!activeEvent) return null;
-
   const filteredGuests = useMemo(() => {
-    return activeEvent.guests.filter((g) => {
+    const list = activeEvent?.guests || [];
+    return list.filter((g) => {
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         if (
@@ -71,16 +67,19 @@ export const GuestsPage: React.FC = () => {
       if (selectedDiet !== 'All' && g.diet !== selectedDiet) return false;
       return true;
     });
-  }, [activeEvent.guests, searchQuery, selectedStatus, selectedGroup, selectedDiet]);
+  }, [activeEvent?.guests, searchQuery, selectedStatus, selectedGroup, selectedDiet]);
 
   // Dietary counts breakdown
   const dietStats = useMemo(() => {
     const stats: Record<string, number> = {};
-    activeEvent.guests.forEach((g) => {
+    const list = activeEvent?.guests || [];
+    list.forEach((g) => {
       stats[g.diet] = (stats[g.diet] || 0) + 1 + (g.plusOnes || 0);
     });
     return stats;
-  }, [activeEvent.guests]);
+  }, [activeEvent?.guests]);
+
+  if (!activeEvent) return null;
 
   const handleOpenCreate = () => {
     setEditingGuest(null);

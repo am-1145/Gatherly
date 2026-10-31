@@ -4,7 +4,6 @@ import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { EventWizardModal } from '../wizard/EventWizardModal';
 import { CopilotDrawer } from '../copilot/CopilotDrawer';
-import { useEvent } from '../../context/EventContext';
 import { X } from 'lucide-react';
 
 export const AppShell: React.FC = () => {
@@ -13,7 +12,6 @@ export const AppShell: React.FC = () => {
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   const [isCopilotDrawerOpen, setIsCopilotDrawerOpen] = useState(false);
   const location = useLocation();
-  const { activeEvent } = useEvent();
 
   // If on copilot main page, don't open drawer
   const isCopilotPage = location.pathname === '/app/copilot';

@@ -10,12 +10,8 @@ import {
   Sparkles,
   ArrowRight,
   Clock,
-  AlertTriangle,
   Plus,
   CheckCircle2,
-  TrendingDown,
-  TrendingUp,
-  Percent,
 } from 'lucide-react';
 import { useEvent } from '../context/EventContext';
 import { Card } from '../components/common/Card';
@@ -36,7 +32,7 @@ export const OverviewPage: React.FC = () => {
     );
   }
 
-  const { budget, tasks = [], guests = [], vendors = [], recommendations = [] } = activeEvent;
+  const { budget, tasks = [], recommendations = [] } = activeEvent;
   const currency = budget.currency;
 
   return (

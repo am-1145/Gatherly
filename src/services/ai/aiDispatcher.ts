@@ -1,4 +1,4 @@
-import { EventModel, ActionProposal, ChatMessage } from '../../types';
+import { EventModel, ChatMessage } from '../../types';
 import { processLocalCopilotPrompt, LocalEngineResult } from './localEngine';
 import { queryGeminiCopilot, getActiveGeminiApiKey } from './geminiService';
 

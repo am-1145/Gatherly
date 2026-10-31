@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import {
-  Settings,
   Moon,
   Sun,
-  DollarSign,
-  Calendar,
   Sparkles,
   RotateCcw,
   Download,
   Upload,
-  ShieldCheck,
   AlertTriangle,
   Check,
-  Info,
 } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 import { useEvent } from '../context/EventContext';

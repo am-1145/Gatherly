@@ -157,7 +157,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       )}
 
       {/* Nav List */}
-      <nav className="flex-1 px-2.5 py-3 space-y-1 overflow-y-auto">
+      <nav aria-label="Main Navigation" className="flex-1 px-2.5 py-3 space-y-1 overflow-y-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = item.exact
@@ -211,6 +211,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             onClick={onOpenCreateWizard}
             className="w-10 h-10 mx-auto flex items-center justify-center rounded-lg bg-charcoal-900 text-ivory-50 dark:bg-ivory-100 dark:text-charcoal-900 hover:opacity-95 shadow-subtle"
             title="Create New Event"
+            aria-label="Create New Event"
           >
             <PlusCircle className="w-5 h-5" />
           </button>

@@ -103,7 +103,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({ isOpen, on
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} maxWidth="lg" showCloseButton={false}>
+    <Modal isOpen={isOpen} onClose={onClose} maxWidth="lg" showCloseButton={false} aria-label="Search Workspace">
       <div className="relative">
         <div className="flex items-center gap-3 px-3 py-2 border-b border-ivory-200 dark:border-charcoal-800">
           <Search className="w-5 h-5 text-charcoal-400" />
@@ -112,6 +112,7 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({ isOpen, on
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search tasks, vendors, guests, expenses... (Esc to exit)"
+            aria-label="Search tasks, vendors, guests, and expenses"
             className="w-full text-sm bg-transparent border-0 focus:outline-none text-charcoal-900 dark:text-ivory-50 placeholder-charcoal-400"
             autoFocus
           />

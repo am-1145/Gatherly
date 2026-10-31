@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Send,
   Sparkles,
@@ -6,8 +6,6 @@ import {
   Plus,
   Trash2,
   Bot,
-  SlidersHorizontal,
-  ChevronDown,
   Info,
   Loader2,
 } from 'lucide-react';
@@ -19,7 +17,7 @@ import { getActiveGeminiApiKey, getActiveGeminiModel } from '../../services/ai/g
 import { MessageBubble } from './MessageBubble';
 import { Button } from '../common/Button';
 import { Badge } from '../common/Badge';
-import { formatCurrency, formatDate } from '../../utils/formatters';
+import { formatCurrency } from '../../utils/formatters';
 
 interface CopilotChatProps {
   compact?: boolean;
@@ -96,7 +94,7 @@ Ask me anything about trimming vendor costs, timeline checklists, or adjusting h
   // Current session
   const currentSession =
     sessions.find((s) => s.id === activeSessionId) || sessions[0];
-  const messages = currentSession?.messages || [];
+  const messages = useMemo(() => currentSession?.messages || [], [currentSession]);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
@@ -161,7 +159,7 @@ Ask me anything about trimming vendor costs, timeline checklists, or adjusting h
             : s
         )
       );
-    } catch (error) {
+    } catch {
       const errorMsg: ChatMessage = {
         id: `msg-err-${Date.now()}`,
         role: 'assistant',

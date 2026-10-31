@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, X, Sparkles, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Check, Sparkles, CheckCircle2 } from 'lucide-react';
 import { ActionProposal } from '../../types';
 import { useEvent } from '../../context/EventContext';
 import { Button } from '../common/Button';

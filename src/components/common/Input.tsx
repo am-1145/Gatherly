@@ -18,7 +18,11 @@ export const Input: React.FC<InputProps> = ({
   id,
   ...props
 }) => {
-  const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
+  const fallbackId = React.useId();
+  const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : fallbackId);
+  const errorId = error ? `${inputId}-error` : undefined;
+  const hintId = hint ? `${inputId}-hint` : undefined;
+  const describedBy = [errorId, hintId].filter(Boolean).join(' ') || undefined;
 
   return (
     <div className="w-full">
@@ -38,13 +42,16 @@ export const Input: React.FC<InputProps> = ({
         )}
         <input
           id={inputId}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy || props['aria-describedby']}
+          aria-errormessage={errorId}
           className={`block w-full rounded-lg text-sm bg-white dark:bg-charcoal-900 border ${
             error
               ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
               : 'border-ivory-200 dark:border-charcoal-700 focus:border-sage-500 focus:ring-sage-500'
           } text-charcoal-900 dark:text-ivory-100 placeholder-charcoal-400 py-2.5 ${
             leftElement ? 'pl-9' : 'pl-3.5'
-          } ${rightElement ? 'pr-9' : 'pr-3.5'} transition-all focus:outline-none focus:ring-1`}
+          } ${rightElement ? 'pr-9' : 'pr-3.5'} transition-all focus:outline-none focus:ring-1 ${className}`}
           {...props}
         />
         {rightElement && (
@@ -53,8 +60,8 @@ export const Input: React.FC<InputProps> = ({
           </div>
         )}
       </div>
-      {error && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{error}</p>}
-      {hint && !error && <p className="mt-1 text-xs text-charcoal-500 dark:text-charcoal-400">{hint}</p>}
+      {error && <p id={errorId} role="alert" className="mt-1 text-xs text-red-600 dark:text-red-400">{error}</p>}
+      {hint && !error && <p id={hintId} className="mt-1 text-xs text-charcoal-500 dark:text-charcoal-400">{hint}</p>}
     </div>
   );
 };
@@ -73,7 +80,11 @@ export const Textarea: React.FC<TextareaProps> = ({
   id,
   ...props
 }) => {
-  const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
+  const fallbackId = React.useId();
+  const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : fallbackId);
+  const errorId = error ? `${inputId}-error` : undefined;
+  const hintId = hint ? `${inputId}-hint` : undefined;
+  const describedBy = [errorId, hintId].filter(Boolean).join(' ') || undefined;
 
   return (
     <div className="w-full">
@@ -87,6 +98,9 @@ export const Textarea: React.FC<TextareaProps> = ({
       )}
       <textarea
         id={inputId}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={describedBy || props['aria-describedby']}
+        aria-errormessage={errorId}
         className={`block w-full rounded-lg text-sm bg-white dark:bg-charcoal-900 border ${
           error
             ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
@@ -94,8 +108,8 @@ export const Textarea: React.FC<TextareaProps> = ({
         } text-charcoal-900 dark:text-ivory-100 placeholder-charcoal-400 p-3 transition-all focus:outline-none focus:ring-1 ${className}`}
         {...props}
       />
-      {error && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{error}</p>}
-      {hint && !error && <p className="mt-1 text-xs text-charcoal-500 dark:text-charcoal-400">{hint}</p>}
+      {error && <p id={errorId} role="alert" className="mt-1 text-xs text-red-600 dark:text-red-400">{error}</p>}
+      {hint && !error && <p id={hintId} className="mt-1 text-xs text-charcoal-500 dark:text-charcoal-400">{hint}</p>}
     </div>
   );
 };

@@ -1,23 +1,15 @@
 import React, { useState, useMemo } from 'react';
 import {
-  Store,
   Plus,
   Search,
   Star,
   Phone,
   Mail,
-  CheckCircle2,
-  Calendar,
   Layers,
-  ArrowRight,
   ShieldCheck,
   Trash2,
   Edit2,
-  Bookmark,
-  BookmarkCheck,
   Check,
-  X,
-  FileText,
 } from 'lucide-react';
 import { useEvent } from '../context/EventContext';
 import { Card } from '../components/common/Card';
@@ -26,7 +18,7 @@ import { Badge } from '../components/common/Badge';
 import { Input, Textarea } from '../components/common/Input';
 import { Modal } from '../components/common/Modal';
 import { VendorItem, VendorStatus } from '../types';
-import { formatCurrency, formatDate } from '../utils/formatters';
+import { formatCurrency } from '../utils/formatters';
 
 const VENDOR_CATEGORIES = [
   'Venue',
@@ -67,12 +59,11 @@ export const VendorsPage: React.FC = () => {
   const [paymentTerms, setPaymentTerms] = useState('');
   const [notes, setNotes] = useState('');
 
-  if (!activeEvent) return null;
-
-  const currency = activeEvent.budget.currency;
+  const currency = activeEvent?.budget?.currency || 'INR';
 
   const filteredVendors = useMemo(() => {
-    return activeEvent.vendors.filter((v) => {
+    const list = activeEvent?.vendors || [];
+    return list.filter((v) => {
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         if (!v.name.toLowerCase().includes(q) && !v.category.toLowerCase().includes(q)) {
@@ -83,7 +74,9 @@ export const VendorsPage: React.FC = () => {
       if (selectedStatus !== 'All' && v.status !== selectedStatus) return false;
       return true;
     });
-  }, [activeEvent.vendors, searchQuery, selectedCategory, selectedStatus]);
+  }, [activeEvent?.vendors, searchQuery, selectedCategory, selectedStatus]);
+
+  if (!activeEvent) return null;
 
   const handleOpenCreate = () => {
     setEditingVendor(null);

@@ -9,6 +9,7 @@ export interface ModalProps {
   children: React.ReactNode;
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   showCloseButton?: boolean;
+  'aria-label'?: string;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -19,8 +20,11 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   maxWidth = 'md',
   showCloseButton = true,
+  'aria-label': ariaLabel,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const titleId = React.useId();
+  const descId = React.useId();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -62,17 +66,21 @@ export const Modal: React.FC<ModalProps> = ({
         ref={modalRef}
         role="dialog"
         aria-modal="true"
-        className={`relative w-full ${maxWidthStyles[maxWidth]} bg-white dark:bg-charcoal-900 rounded-2xl shadow-elevated border border-ivory-200 dark:border-charcoal-800 p-6 my-8 z-10 animate-slide-up`}
+        aria-labelledby={title ? titleId : undefined}
+        aria-describedby={description ? descId : undefined}
+        aria-label={!title ? (ariaLabel || 'Dialog') : undefined}
+        tabIndex={-1}
+        className={`relative w-full ${maxWidthStyles[maxWidth]} bg-white dark:bg-charcoal-900 rounded-2xl shadow-elevated border border-ivory-200 dark:border-charcoal-800 p-6 my-8 z-10 animate-slide-up focus:outline-none`}
       >
         <div className="flex items-start justify-between mb-4">
           <div>
             {title && (
-              <h3 className="text-lg font-semibold text-charcoal-900 dark:text-ivory-50 tracking-tight">
+              <h3 id={titleId} className="text-lg font-semibold text-charcoal-900 dark:text-ivory-50 tracking-tight">
                 {title}
               </h3>
             )}
             {description && (
-              <p className="text-xs text-charcoal-500 dark:text-charcoal-400 mt-1">
+              <p id={descId} className="text-xs text-charcoal-500 dark:text-charcoal-400 mt-1">
                 {description}
               </p>
             )}

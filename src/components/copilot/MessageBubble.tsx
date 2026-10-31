@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Copy, Check, Sparkles, User } from 'lucide-react';
+import { Copy, Check, Sparkles } from 'lucide-react';
 import { ChatMessage } from '../../types';
 import { ActionProposalCard } from './ActionProposalCard';
 

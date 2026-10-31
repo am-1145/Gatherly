@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Bell, CheckCircle2, AlertTriangle, Calendar, Info, X } from 'lucide-react';
+import { Bell, AlertTriangle, Calendar, Info, X } from 'lucide-react';
 import { useEvent } from '../../context/EventContext';
 import { formatCurrency, formatDate } from '../../utils/formatters';
 
@@ -68,6 +68,8 @@ export const NotificationsDropdown: React.FC = () => {
         onClick={() => setIsOpen(!isOpen)}
         className="relative p-2 rounded-lg text-charcoal-600 dark:text-charcoal-300 hover:text-charcoal-900 dark:hover:text-ivory-50 hover:bg-ivory-100 dark:hover:bg-charcoal-800 transition-colors"
         aria-label="View notifications"
+        aria-haspopup="true"
+        aria-expanded={isOpen}
       >
         <Bell className="w-4 h-4" />
         {notifications.length > 0 && (
@@ -76,7 +78,11 @@ export const NotificationsDropdown: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-charcoal-900 rounded-xl shadow-elevated border border-ivory-200 dark:border-charcoal-800 p-4 z-50 animate-slide-up">
+        <div
+          role="region"
+          aria-label="Notifications panel"
+          className="absolute right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-charcoal-900 rounded-xl shadow-elevated border border-ivory-200 dark:border-charcoal-800 p-4 z-50 animate-slide-up"
+        >
           <div className="flex items-center justify-between pb-3 border-b border-ivory-200 dark:border-charcoal-800 mb-3">
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-charcoal-900 dark:text-ivory-50 uppercase tracking-wider">

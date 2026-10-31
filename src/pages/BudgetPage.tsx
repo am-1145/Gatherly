@@ -1,17 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import {
-  Wallet,
   Plus,
   AlertTriangle,
   CheckCircle2,
   PieChart as PieChartIcon,
   TrendingUp,
-  DollarSign,
-  ArrowRight,
   Edit2,
   Trash2,
-  ShieldAlert,
-  Info,
 } from 'lucide-react';
 import {
   PieChart,
@@ -30,8 +25,7 @@ import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 import { Input } from '../components/common/Input';
 import { Modal } from '../components/common/Modal';
-import { ProgressBar } from '../components/common/ProgressBar';
-import { ExpenseItem, BudgetCategory } from '../types';
+import { BudgetCategory } from '../types';
 import { formatCurrency } from '../utils/formatters';
 
 const CHART_COLORS = [
@@ -76,27 +70,28 @@ export const BudgetPage: React.FC = () => {
   const [editingCategory, setEditingCategory] = useState<BudgetCategory | null>(null);
   const [editAllocatedAmount, setEditAllocatedAmount] = useState<number>(0);
 
-  if (!activeEvent) return null;
-
-  const { budget } = activeEvent;
-  const currency = budget.currency;
+  const budget = activeEvent?.budget;
+  const currency = budget?.currency || 'INR';
 
   // Filter expenses by selected category
   const filteredExpenses = useMemo(() => {
+    if (!budget) return [];
     if (selectedCategoryKey === 'All') return budget.expenses;
     return budget.expenses.filter((e) => e.categoryKey === selectedCategoryKey);
-  }, [budget.expenses, selectedCategoryKey]);
+  }, [budget, selectedCategoryKey]);
 
   // Recharts data for pie chart
   const pieChartData = useMemo(() => {
+    if (!budget) return [];
     return budget.categories.map((c) => ({
       name: c.name,
       value: c.allocatedAmount,
     }));
-  }, [budget.categories]);
+  }, [budget]);
 
   // Recharts comparison data (Allocated vs Estimated vs Actual)
   const comparisonBarData = useMemo(() => {
+    if (!budget) return [];
     return budget.categories.map((c) => {
       const catExpenses = budget.expenses.filter((e) => e.categoryKey === c.key);
       const estimated = catExpenses.reduce((s, e) => s + (e.estimatedAmount || 0), 0);
@@ -111,7 +106,9 @@ export const BudgetPage: React.FC = () => {
         Paid: actualPaid,
       };
     });
-  }, [budget.categories, budget.expenses]);
+  }, [budget]);
+
+  if (!activeEvent || !budget) return null;
 
   const handleSaveTotalBudget = () => {
     updateBudgetTotal(newTotalBudget);

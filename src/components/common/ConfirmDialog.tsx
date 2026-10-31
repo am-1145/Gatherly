@@ -25,7 +25,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   variant = 'danger',
 }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} maxWidth="sm" showCloseButton={false}>
+    <Modal isOpen={isOpen} onClose={onClose} maxWidth="sm" showCloseButton={false} aria-label={title}>
       <div className="text-center pt-2 pb-4">
         <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 mx-auto flex items-center justify-center mb-3">
           <AlertTriangle className="w-6 h-6" />

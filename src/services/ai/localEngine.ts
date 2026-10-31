@@ -1,4 +1,4 @@
-import { EventModel, ActionProposal, ChatMessage } from '../../types';
+import { EventModel, ActionProposal } from '../../types';
 import { formatCurrency, formatDate } from '../../utils/formatters';
 
 export interface LocalEngineResult {
@@ -83,7 +83,7 @@ Would you like me to adjust your **Food & Beverages** category allocation from $
     const pendingTasks = event.tasks.filter((t) => t.status !== 'completed');
     const urgentTasks = pendingTasks.filter((t) => t.priority === 'urgent' || t.priority === 'high');
 
-    let taskBullets = '';
+    let taskBullets: string;
     if (urgentTasks.length > 0) {
       taskBullets = urgentTasks
         .slice(0, 4)
@@ -201,7 +201,7 @@ Would you like me to add a quick planning reminder to check venue maximum seatin
     query.includes('quote')
   ) {
     const vendors = event.vendors;
-    let vendorSummary = '';
+    let vendorSummary: string;
 
     if (vendors.length > 0) {
       vendorSummary = vendors
@@ -258,9 +258,9 @@ Would you like me to create an expense record for the shortlisted **${vendors[0]
     query.includes('activity') ||
     query.includes('unique')
   ) {
-    let themeIdeas = '';
-    let proposedTitle = '';
-    let proposedDesc = '';
+    let themeIdeas: string;
+    let proposedTitle: string;
+    let proposedDesc: string;
 
     if (occasion === 'wedding') {
       themeIdeas = `1. **Royal Rajputana Amber & Marigold:** Brass samovars, earthen terracotta diyas, and sheer marigold hangings.

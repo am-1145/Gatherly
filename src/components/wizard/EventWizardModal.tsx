@@ -4,8 +4,6 @@ import confetti from 'canvas-confetti';
 import {
   Sparkles,
   PartyPopper,
-  Calendar,
-  DollarSign,
   Heart,
   Briefcase,
   Users,
@@ -14,7 +12,6 @@ import {
   ArrowLeft,
   Check,
   Wand2,
-  Sliders,
   AlertCircle,
 } from 'lucide-react';
 import { Modal } from '../common/Modal';

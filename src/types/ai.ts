@@ -1,5 +1,3 @@
-import { TaskItem, ExpenseItem, IdeaItem, RunbookItem, BudgetCategory } from './event';
-
 export type ActionProposalType =
   | 'add_task'
   | 'update_budget'

@@ -3,18 +3,14 @@ import {
   Clock,
   Plus,
   CheckCircle2,
-  AlertTriangle,
   MapPin,
   User,
   Trash2,
   Edit2,
   Flag,
   Smartphone,
-  Play,
-  RotateCcw,
 } from 'lucide-react';
 import { useEvent } from '../context/EventContext';
-import { Card } from '../components/common/Card';
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 import { Input, Textarea } from '../components/common/Input';
@@ -40,11 +36,10 @@ export const RunbookPage: React.FC = () => {
   const [status, setStatus] = useState<RunbookStatus>('pending');
   const [notes, setNotes] = useState('');
 
-  if (!activeEvent) return null;
-
   const sortedRunbook = useMemo(() => {
-    return [...activeEvent.runbook].sort((a, b) => a.time.localeCompare(b.time));
-  }, [activeEvent.runbook]);
+    const list = activeEvent?.runbook || [];
+    return [...list].sort((a, b) => a.time.localeCompare(b.time));
+  }, [activeEvent?.runbook]);
 
   const filteredItems = useMemo(() => {
     return sortedRunbook.filter((item) => {
@@ -55,6 +50,8 @@ export const RunbookPage: React.FC = () => {
       return true;
     });
   }, [sortedRunbook, selectedFilter]);
+
+  if (!activeEvent) return null;
 
   const handleOpenCreate = () => {
     setEditingItem(null);
@@ -183,7 +180,7 @@ export const RunbookPage: React.FC = () => {
             No schedule milestones matching this filter.
           </div>
         ) : (
-          filteredItems.map((item, idx) => {
+          filteredItems.map((item) => {
             const isCompleted = item.status === 'completed';
             const isFlagged = item.status === 'flagged';
             const isInProgress = item.status === 'in_progress';

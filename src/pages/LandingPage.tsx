@@ -8,13 +8,8 @@ import {
   Users,
   Store,
   Clock,
-  Lightbulb,
   ShieldCheck,
   ChevronRight,
-  Play,
-  Heart,
-  PartyPopper,
-  Briefcase,
 } from 'lucide-react';
 import { Button } from '../components/common/Button';
 import { Card } from '../components/common/Card';
@@ -23,7 +18,6 @@ import { useEvent } from '../context/EventContext';
 import { EventWizardModal } from '../components/wizard/EventWizardModal';
 import { parseNaturalLanguageEvent, generateEventFromDraft } from '../utils/naturalLanguageParser';
 import { generateEventWithGemini, getActiveGeminiApiKey } from '../services/ai/geminiService';
-import { formatCurrency } from '../utils/formatters';
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();

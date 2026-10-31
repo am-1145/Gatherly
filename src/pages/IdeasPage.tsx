@@ -1,16 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import {
-  Lightbulb,
   Heart,
   Plus,
-  Search,
   CheckCircle2,
-  DollarSign,
-  ArrowRight,
-  Sparkles,
-  Tag,
-  Bookmark,
-  Share2,
+  Search,
 } from 'lucide-react';
 import { useEvent } from '../context/EventContext';
 import { Card } from '../components/common/Card';
@@ -53,12 +46,11 @@ export const IdeasPage: React.FC = () => {
   const [ideaCost, setIdeaCost] = useState<number>(3000);
   const [ideaTags, setIdeaTags] = useState('Creative, High Impact');
 
-  if (!activeEvent) return null;
-
-  const currency = activeEvent.budget.currency;
+  const currency = activeEvent?.budget?.currency || 'INR';
 
   const filteredIdeas = useMemo(() => {
-    return activeEvent.ideas.filter((item) => {
+    const list = activeEvent?.ideas || [];
+    return list.filter((item) => {
       if (onlyFavorites && !item.isFavorite) return false;
       if (selectedCategory !== 'All' && item.category !== selectedCategory) return false;
       if (searchQuery.trim()) {
@@ -72,7 +64,9 @@ export const IdeasPage: React.FC = () => {
       }
       return true;
     });
-  }, [activeEvent.ideas, onlyFavorites, selectedCategory, searchQuery]);
+  }, [activeEvent?.ideas, onlyFavorites, selectedCategory, searchQuery]);
+
+  if (!activeEvent) return null;
 
   const handleSaveIdea = (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,7 +107,18 @@ export const IdeasPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <div className="relative">
+            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-charcoal-400" />
+            <input
+              type="text"
+              placeholder="Search concepts..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-8 pr-3 py-1.5 rounded-lg text-xs bg-white dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-700 text-charcoal-900 dark:text-ivory-100 placeholder-charcoal-400 focus:outline-none focus:border-sage-500"
+            />
+          </div>
+
           <button
             onClick={() => setOnlyFavorites(!onlyFavorites)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${onlyFavorites

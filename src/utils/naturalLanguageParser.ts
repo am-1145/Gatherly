@@ -78,7 +78,7 @@ export function parseNaturalLanguageEvent(prompt: string): ParsedEventDraft {
   else if (prompt.includes('€') || text.includes('eur') || text.includes('euro')) currency = 'EUR';
   else if (prompt.includes('£') || text.includes('gbp') || text.includes('pound')) currency = 'GBP';
 
-  let budgetTotal = 50000;
+  let budgetTotal: number;
   // Match currency and amount like ₹40,000 or 10 lakh or 40k or $5,000
   const budgetMatch = prompt.match(/(?:budget\s*(?:of|is|:)?\s*|[₹$€£]|rs\.?\s*|inr\s*)(\d+(?:,\d+)*(?:\.\d+)?)\s*(k|lakh|lac|m|cr|crore|million|thousand)?/i) ||
                      prompt.match(/(\d+(?:,\d+)*(?:\.\d+)?)\s*(k|lakh|lac|m|cr|crore|million|thousand)\s*(?:budget|inr|rs|usd|\$|₹)?/i);
