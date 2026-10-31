@@ -73,8 +73,8 @@ describe('Edge Cases & Resiliency Testing Suite', () => {
           total: 0,
           currency: 'INR',
           categories: [
-            { id: 'c1', key: 'venue', name: 'Venue', allocatedAmount: 0, color: '#333' },
-            { id: 'c2', key: 'catering', name: 'Catering', allocatedAmount: 0, color: '#444' }
+            { key: 'venue', name: 'Venue', allocatedAmount: 0, color: '#333' },
+            { key: 'catering', name: 'Catering', allocatedAmount: 0, color: '#444' }
           ],
           expenses: []
         },
@@ -83,8 +83,7 @@ describe('Edge Cases & Resiliency Testing Suite', () => {
         vendors: [],
         ideas: [],
         runbook: [],
-        preferences: {},
-        assumptions: []
+        preferences: {}
       };
 
       const totalAllocated = zeroBudgetEvent.budget!.categories.reduce((s, c) => s + c.allocatedAmount, 0);

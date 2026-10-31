@@ -49,6 +49,7 @@ describe('CopilotChat Feature Tests', () => {
         type: 'add_task',
         title: 'Add New Task',
         description: 'Order custom birthday cake with delivery',
+        status: 'pending',
         impactSummary: 'Task added to checklist due in 3 days',
         payload: {
           task: {
@@ -59,6 +60,7 @@ describe('CopilotChat Feature Tests', () => {
           },
         },
       },
+      suggestedFollowUps: ['Show remaining tasks', 'Review catering budget'],
       intentTag: 'task_management',
     });
 

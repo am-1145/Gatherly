@@ -12,6 +12,7 @@ export interface ActionProposal {
   title: string;
   description: string;
   status: 'pending' | 'applied' | 'dismissed';
+  impactSummary?: string;
   payload: Record<string, unknown>;
 }
 

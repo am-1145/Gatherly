@@ -504,18 +504,19 @@ export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   // --- Copilot Action Proposal Applier ---
   const applyActionProposal = useCallback(
     (proposal: ActionProposal) => {
+      const p = proposal.payload;
       if (proposal.type === 'add_task') {
-        addTask(proposal.payload);
+        addTask(p as unknown as Omit<TaskItem, 'id'>);
       } else if (proposal.type === 'add_expense') {
-        addExpense(proposal.payload);
+        addExpense(p as unknown as Omit<ExpenseItem, 'id'>);
       } else if (proposal.type === 'update_budget') {
-        updateBudgetTotal(proposal.payload.total);
+        updateBudgetTotal(Number(p.total) || 0);
       } else if (proposal.type === 'save_idea') {
-        addCustomIdea(proposal.payload);
+        addCustomIdea(p as unknown as Omit<IdeaItem, 'id' | 'isFavorite'>);
       } else if (proposal.type === 'add_runbook_item') {
-        addRunbookItem(proposal.payload);
+        addRunbookItem(p as unknown as Omit<RunbookItem, 'id'>);
       } else if (proposal.type === 'reallocate_category') {
-        updateCategoryAllocation(proposal.payload.categoryKey, proposal.payload.amount);
+        updateCategoryAllocation(String(p.categoryKey || ''), Number(p.amount) || 0);
       }
     },
     [addTask, addExpense, updateBudgetTotal, addCustomIdea, addRunbookItem, updateCategoryAllocation]

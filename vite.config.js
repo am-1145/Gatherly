@@ -32,6 +32,8 @@ export default defineConfig(function (_a) {
         test: {
             globals: true,
             environment: 'jsdom',
+            setupFiles: ['./src/tests/setup.ts'],
+            fileParallelism: false,
         },
     };
 });
