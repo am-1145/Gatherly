@@ -8,6 +8,11 @@ const STORAGE_KEYS = {
   CHAT_SESSIONS: 'gatherly_chat_sessions_v1',
 };
 
+/**
+ * Loads stored events from browser LocalStorage with automatic corrupted JSON recovery.
+ *
+ * @returns Array of valid EventModel objects, falling back to default seed events if storage is empty or malformed.
+ */
 export function loadStoredEvents(): EventModel[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.EVENTS);
@@ -26,6 +31,12 @@ export function loadStoredEvents(): EventModel[] {
   }
 }
 
+/**
+ * Persists the entire array of events to browser LocalStorage.
+ *
+ * @param events - Complete list of active and archived event records.
+ * @returns void
+ */
 export function saveStoredEvents(events: EventModel[]): void {
   try {
     localStorage.setItem(STORAGE_KEYS.EVENTS, JSON.stringify(events));
@@ -34,6 +45,12 @@ export function saveStoredEvents(events: EventModel[]): void {
   }
 }
 
+/**
+ * Retrieves the currently active event ID from browser LocalStorage.
+ *
+ * @param defaultId - Fallback ID to return if no active event is currently stored.
+ * @returns Stored active event UUID or defaultId fallback.
+ */
 export function loadActiveEventId(defaultId: string): string {
   try {
     const id = localStorage.getItem(STORAGE_KEYS.ACTIVE_EVENT_ID);
@@ -43,6 +60,12 @@ export function loadActiveEventId(defaultId: string): string {
   }
 }
 
+/**
+ * Saves the selected active event ID to browser LocalStorage.
+ *
+ * @param id - The event identifier to designate as active in current session.
+ * @returns void
+ */
 export function saveActiveEventId(id: string): void {
   try {
     localStorage.setItem(STORAGE_KEYS.ACTIVE_EVENT_ID, id);
@@ -51,6 +74,11 @@ export function saveActiveEventId(id: string): void {
   }
 }
 
+/**
+ * Clears custom modifications and restores initial demo events into LocalStorage.
+ *
+ * @returns Re-initialized array of default demo events.
+ */
 export function resetToDefaultDemo(): EventModel[] {
   try {
     localStorage.removeItem(STORAGE_KEYS.EVENTS);
@@ -65,6 +93,11 @@ export function resetToDefaultDemo(): EventModel[] {
   }
 }
 
+/**
+ * Serializes all workspace data into an exportable, formatted JSON string.
+ *
+ * @returns Pretty-printed JSON string containing schema version, timestamp, and event array.
+ */
 export function exportBackupJSON(): string {
   const data = {
     version: '1.0',
@@ -74,6 +107,12 @@ export function exportBackupJSON(): string {
   return JSON.stringify(data, null, 2);
 }
 
+/**
+ * Parses and validates an imported backup JSON string, persisting valid events to LocalStorage.
+ *
+ * @param jsonStr - Raw JSON backup string uploaded by user.
+ * @returns Array of imported EventModel objects if parsing and validation succeed, or null on failure.
+ */
 export function importBackupJSON(jsonStr: string): EventModel[] | null {
   try {
     const parsed = JSON.parse(jsonStr);
@@ -90,4 +129,3 @@ export function importBackupJSON(jsonStr: string): EventModel[] | null {
     return null;
   }
 }
-

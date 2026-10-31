@@ -14,6 +14,20 @@ export interface ConfirmDialogProps {
   variant?: 'danger' | 'primary';
 }
 
+/**
+ * User action confirmation prompt modal with danger or primary styling.
+ *
+ * @param props - Dialog configurations
+ * @param props.isOpen - Whether the confirmation modal is open
+ * @param props.onClose - Dismiss callback invoked when cancelled
+ * @param props.onConfirm - Callback invoked when the user confirms the action
+ * @param props.title - Modal title heading
+ * @param props.message - Descriptive warning message explaining consequence
+ * @param props.confirmLabel - Label for confirmation button (defaults to "Confirm")
+ * @param props.cancelLabel - Label for dismissal button (defaults to "Cancel")
+ * @param props.variant - Button style variant ('danger' | 'primary')
+ * @returns JSX.Element confirmation dialog modal
+ */
 export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   isOpen,
   onClose,

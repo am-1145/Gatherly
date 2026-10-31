@@ -8,10 +8,14 @@ export interface GeminiAnalysisResult {
   intentTag: string;
 }
 
-// Get API key from Vite environment or localStorage
+/**
+ * Retrieves the currently active Gemini API key from environment variables or browser LocalStorage.
+ *
+ * @returns Trimmed API key string if present, or empty string if not configured.
+ */
 export function getActiveGeminiApiKey(): string {
   try {
-    const envKey = (import.meta as any).env?.VITE_GEMINI_API_KEY || '';
+    const envKey = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_GEMINI_API_KEY || '';
     if (envKey && envKey.trim().length > 5) {
       return envKey.trim();
     }
@@ -22,9 +26,14 @@ export function getActiveGeminiApiKey(): string {
   }
 }
 
+/**
+ * Retrieves the preferred Gemini model name configured for AI completions.
+ *
+ * @returns Configured model identifier string (e.g. "gemini-1.5-flash").
+ */
 export function getActiveGeminiModel(): string {
   try {
-    const envModel = (import.meta as any).env?.VITE_GEMINI_MODEL || '';
+    const envModel = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_GEMINI_MODEL || '';
     return envModel || 'gemini-3.6-flash';
   } catch {
     return 'gemini-3.6-flash';
@@ -32,9 +41,14 @@ export function getActiveGeminiModel(): string {
 }
 
 /**
- * Real Gemini conversational analysis for the Copilot.
- * Injects current event state into system instructions, then asks Gemini to formulate
- * strategic planning analysis and optionally emit a structured action proposal block.
+ * Sends conversational prompt and live workspace state to Google Gemini API.
+ * Formulates strategic guidance and parses embedded action proposals into structured mutations.
+ *
+ * @param prompt - Natural language question, command, or request from user.
+ * @param event - The current live EventModel state for real-time contextual awareness.
+ * @param apiKey - Valid Google Gemini API authentication key.
+ * @param history - Array of recent chat messages for conversational continuity.
+ * @returns Object containing assistant textual content, optional ActionProposal, follow-up prompts, and intent tag.
  */
 export async function queryGeminiCopilot(
   prompt: string,
@@ -178,8 +192,11 @@ Only output the action block if a tangible modification to the event workspace m
 }
 
 /**
- * Real Gemini event plan generator.
- * Uses Gemini to parse natural language prompts and synthesize a structured event plan.
+ * Generates an end-to-end structured event plan directly from raw vision text using Google Gemini JSON mode.
+ *
+ * @param prompt - Natural language description of celebration vision, budget, and guest requirements.
+ * @param apiKey - Valid Google Gemini API authentication key.
+ * @returns Fully formed EventModel matching the workspace schema, or null if generation fails.
  */
 export async function generateEventWithGemini(
   prompt: string,

@@ -8,6 +8,17 @@ export interface BadgeProps {
   dot?: boolean;
 }
 
+/**
+ * Status indicator and tag badge with multiple color themes and optional status dot.
+ *
+ * @param props - Badge properties
+ * @param props.children - Label or content inside the badge
+ * @param props.variant - Color scheme ('neutral', 'sage', 'terracotta', 'amber', 'blue', 'red', 'purple')
+ * @param props.size - Dimension padding style ('sm' | 'md')
+ * @param props.className - Additional utility classes
+ * @param props.dot - Whether to display an inline colored status indicator dot
+ * @returns JSX.Element span element representing the styled badge
+ */
 export const Badge: React.FC<BadgeProps> = ({
   children,
   variant = 'neutral',

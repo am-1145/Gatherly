@@ -10,6 +10,13 @@ export interface DispatchAIParams {
   chatHistory: ChatMessage[];
 }
 
+/**
+ * Dispatches an AI Copilot user prompt either to live Gemini API or to the deterministic local offline engine.
+ * Automatically falls back to offline engine when no key is configured or when network is offline.
+ *
+ * @param params - Configuration parameters containing prompt text, event state, optional API key, and conversation history.
+ * @returns Generated Copilot response with content, optional ActionProposal, intent tag, and suggested follow-ups.
+ */
 export async function dispatchCopilotMessage(
   params: DispatchAIParams
 ): Promise<LocalEngineResult> {

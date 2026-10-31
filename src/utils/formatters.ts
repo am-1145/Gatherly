@@ -7,6 +7,14 @@ export const CURRENCY_SYMBOLS: Record<CurrencyCode, string> = {
   GBP: '£',
 };
 
+/**
+ * Formats a numeric currency amount according to regional locale conventions (e.g., Indian Lakhs/Crores for INR).
+ *
+ * @param amount - The numeric monetary value to be formatted.
+ * @param currency - The 3-letter currency code (defaults to 'INR').
+ * @param compact - When true, abbreviates large numbers into human-friendly notation (e.g., ₹1.5L, ₹1.2Cr, $1.5M).
+ * @returns Formatted currency string with appropriate symbol and punctuation (e.g. "₹45,000", "₹1.5L").
+ */
 export function formatCurrency(
   amount: number,
   currency: CurrencyCode = 'INR',
@@ -47,6 +55,12 @@ export function formatCurrency(
   return `${symbol}${amount.toLocaleString('en-US')}`;
 }
 
+/**
+ * Formats an ISO date string or calendar timestamp into an accessible, readable date representation.
+ *
+ * @param dateString - ISO 8601 date string (e.g., "2026-11-28") or Date parseable string.
+ * @returns Formatted date representation (e.g., "Sat, Nov 28, 2026") or fallback string if invalid.
+ */
 export function formatDate(dateString: string): string {
   if (!dateString) return 'Date TBD';
   try {
@@ -63,6 +77,12 @@ export function formatDate(dateString: string): string {
   }
 }
 
+/**
+ * Calculates remaining days until target event date and returns human-readable status metadata.
+ *
+ * @param targetDate - ISO date string indicating the planned celebration or milestone day.
+ * @returns Metadata object containing days count, readable display label, past flag, and today flag.
+ */
 export function getDaysRemaining(targetDate: string): {
   days: number;
   label: string;
@@ -96,14 +116,26 @@ export function getDaysRemaining(targetDate: string): {
   }
 }
 
+/**
+ * Normalizes time string for display.
+ *
+ * @param timeStr - Time string representation (e.g. "06:00 PM").
+ * @returns Formatted time string or empty string if input is falsy.
+ */
 export function formatTime(timeStr: string): string {
   if (!timeStr) return '';
   return timeStr;
 }
 
+/**
+ * Computes safe clamped integer percentage between 0 and 100.
+ *
+ * @param value - Numerator (current accumulated count or spent amount).
+ * @param total - Denominator (target headcount or total budget allocation).
+ * @returns Clamped integer percentage between 0 and 100.
+ */
 export function formatPercent(value: number, total: number): number {
   if (!total || total <= 0) return 0;
   const pct = Math.round((value / total) * 100);
   return Math.min(Math.max(pct, 0), 100);
 }
-

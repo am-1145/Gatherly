@@ -7,6 +7,15 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   padding?: 'none' | 'sm' | 'md' | 'lg';
 }
 
+/**
+ * Content container card supporting standard, flat, elevated, and glassmorphism styles.
+ *
+ * @param props - Card component attributes
+ * @param props.children - Child elements rendered inside the card
+ * @param props.variant - Visual styling preset ('default', 'flat', 'elevated', 'glass')
+ * @param props.padding - Internal padding token ('none', 'sm', 'md', 'lg')
+ * @returns JSX.Element div styled according to design tokens
+ */
 export const Card: React.FC<CardProps> = ({
   children,
   variant = 'default',

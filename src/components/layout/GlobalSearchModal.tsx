@@ -10,6 +10,14 @@ interface GlobalSearchModalProps {
   onClose: () => void;
 }
 
+/**
+ * Command-palette style global search modal querying across tasks, vendors, guests, and expenses.
+ *
+ * @param props - Modal properties
+ * @param props.isOpen - Whether global search modal overlay is open
+ * @param props.onClose - Dismiss callback
+ * @returns Accessible command search dialog modal
+ */
 export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({ isOpen, onClose }) => {
   const [query, setQuery] = useState('');
   const { activeEvent } = useEvent();

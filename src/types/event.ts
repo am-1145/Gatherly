@@ -136,7 +136,7 @@ export interface AIRecommendation {
   category: 'budget' | 'timeline' | 'vendor' | 'guest';
   suggestedAction?: {
     type: 'add_task' | 'reallocate_budget' | 'send_rsvp_reminder' | 'review_vendor';
-    payload: any;
+    payload: Record<string, unknown>;
   };
 }
 

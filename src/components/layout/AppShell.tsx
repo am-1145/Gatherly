@@ -18,6 +18,14 @@ export const AppShell: React.FC = () => {
 
   return (
     <div className="flex h-screen w-full bg-ivory-50 dark:bg-charcoal-950 overflow-hidden font-sans text-charcoal-900 dark:text-ivory-100 antialiased">
+      {/* Skip to Main Content Link for Keyboard & Screen Readers */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-charcoal-900 focus:text-ivory-50 focus:rounded-lg focus:shadow-elevated focus:outline-none text-xs font-semibold"
+      >
+        Skip to main content
+      </a>
+
       {/* Desktop Collapsible Sidebar */}
       <div className="hidden md:flex shrink-0">
         <Sidebar
@@ -38,6 +46,7 @@ export const AppShell: React.FC = () => {
             <div className="absolute top-4 right-3 z-20">
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Close mobile navigation"
                 className="p-1.5 rounded-lg text-charcoal-400 hover:text-charcoal-700 dark:hover:text-charcoal-200"
               >
                 <X className="w-5 h-5" />
@@ -66,7 +75,7 @@ export const AppShell: React.FC = () => {
         />
 
         {/* Scrollable Viewport */}
-        <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6 max-w-7xl w-full mx-auto">
+        <main id="main-content" tabIndex={-1} className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6 max-w-7xl w-full mx-auto focus:outline-none">
           <Outlet />
         </main>
       </div>

@@ -8,6 +8,17 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   rightElement?: React.ReactNode;
 }
 
+/**
+ * Accessible form text input component with built-in labeling, hint, error descriptions, and adornments.
+ *
+ * @param props - Input field properties
+ * @param props.label - Optional text label placed above the input
+ * @param props.error - Validation error message linked via aria-errormessage and aria-describedby
+ * @param props.hint - Helper guidance text linked via aria-describedby
+ * @param props.leftElement - Visual adornment or icon placed inside left boundary
+ * @param props.rightElement - Visual adornment or action button placed inside right boundary
+ * @returns Accessible JSX.Element input wrapper container
+ */
 export const Input: React.FC<InputProps> = ({
   label,
   error,

@@ -19,6 +19,12 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 
 const SETTINGS_KEY = 'gatherly_app_settings_v1';
 
+/**
+ * Provider maintaining persistent user preferences including dark/light theme, default currency, and AI mode.
+ *
+ * @param props.children - Child elements that consume settings context.
+ * @returns SettingsContext Provider component.
+ */
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     try {
@@ -125,6 +131,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 };
 
+/**
+ * Hook to access application user settings, theme toggling, and AI engine preferences.
+ *
+ * @returns SettingsContextType object with theme, currency, AI mode, and setter actions.
+ * @throws Error when called outside a `<SettingsProvider>` component tree.
+ */
 export function useSettings() {
   const context = useContext(SettingsContext);
   if (!context) {

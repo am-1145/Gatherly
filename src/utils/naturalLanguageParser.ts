@@ -26,6 +26,12 @@ export interface ParsedEventDraft {
   assumptions: string[];
 }
 
+/**
+ * Parses freeform natural language text into a structured event draft using multi-factor deterministic extraction.
+ *
+ * @param prompt - Natural language prompt provided by user (e.g. "Birthday party for 80 pax in Bangalore with ₹45,000 budget").
+ * @returns Parsed event draft containing extracted occasion, guest count, city, date, budget, preferences, and explicit assumptions.
+ */
 export function parseNaturalLanguageEvent(prompt: string): ParsedEventDraft {
   const text = prompt.toLowerCase();
   const assumptions: string[] = [];
@@ -212,6 +218,13 @@ export function parseNaturalLanguageEvent(prompt: string): ParsedEventDraft {
   };
 }
 
+/**
+ * Assembles a complete, production-ready EventModel workspace from a parsed event draft.
+ * Computes occasion-calibrated budget allocations, generates initial tasks, quotes, ideas, and timeline.
+ *
+ * @param draft - The structured draft produced by parseNaturalLanguageEvent or wizard steps.
+ * @returns Fully populated EventModel containing budget breakdown, expenses, guest targets, tasks, vendors, and runbook.
+ */
 export function generateEventFromDraft(draft: ParsedEventDraft): EventModel {
   const eventId = `event-${Date.now()}`;
   const total = draft.budgetTotal;

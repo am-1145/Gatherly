@@ -385,14 +385,15 @@ export const BudgetPage: React.FC = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
+            <caption className="sr-only">Budget category allocation summary</caption>
             <thead className="bg-ivory-100/70 dark:bg-charcoal-800/60 text-charcoal-500 uppercase tracking-wider font-semibold border-b border-ivory-200 dark:border-charcoal-700">
               <tr>
-                <th className="py-3 px-4">Category</th>
-                <th className="py-3 px-4">Allocated</th>
-                <th className="py-3 px-4">Estimated Total</th>
-                <th className="py-3 px-4">Actual Paid</th>
-                <th className="py-3 px-4">Variance</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th scope="col" className="py-3 px-4">Category</th>
+                <th scope="col" className="py-3 px-4">Allocated</th>
+                <th scope="col" className="py-3 px-4">Estimated Total</th>
+                <th scope="col" className="py-3 px-4">Actual Paid</th>
+                <th scope="col" className="py-3 px-4">Variance</th>
+                <th scope="col" className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-ivory-200 dark:divide-charcoal-800 text-charcoal-800 dark:text-charcoal-200">
@@ -482,14 +483,15 @@ export const BudgetPage: React.FC = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
+            <caption className="sr-only">Detailed expense line items</caption>
             <thead className="bg-ivory-100/70 dark:bg-charcoal-800/60 text-charcoal-500 uppercase tracking-wider font-semibold border-b border-ivory-200 dark:border-charcoal-700">
               <tr>
-                <th className="py-3 px-4">Expense Item</th>
-                <th className="py-3 px-4">Category</th>
-                <th className="py-3 px-4">Estimated</th>
-                <th className="py-3 px-4">Actual Amount</th>
-                <th className="py-3 px-4">Payment Status</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th scope="col" className="py-3 px-4">Expense Item</th>
+                <th scope="col" className="py-3 px-4">Category</th>
+                <th scope="col" className="py-3 px-4">Estimated</th>
+                <th scope="col" className="py-3 px-4">Actual Amount</th>
+                <th scope="col" className="py-3 px-4">Payment Status</th>
+                <th scope="col" className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-ivory-200 dark:divide-charcoal-800 text-charcoal-800 dark:text-charcoal-200">

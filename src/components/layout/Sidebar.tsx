@@ -24,6 +24,15 @@ interface SidebarProps {
   onOpenCreateWizard: () => void;
 }
 
+/**
+ * Collapsible primary navigation sidebar linking to all Gatherly AI workspaces and views.
+ *
+ * @param props - Sidebar properties
+ * @param props.isCollapsed - Whether the sidebar is in icon-only collapsed state
+ * @param props.setIsCollapsed - State setter to expand or collapse sidebar width
+ * @param props.onOpenCreateWizard - Callback to trigger event creation wizard modal
+ * @returns JSX.Element sidebar navigation element
+ */
 export const Sidebar: React.FC<SidebarProps> = ({
   isCollapsed,
   setIsCollapsed,

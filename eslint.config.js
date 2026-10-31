@@ -48,5 +48,11 @@ export default tseslint.config(
         }
       ]
     }
+  },
+  {
+    files: ['**/context/*.tsx'],
+    rules: {
+      'react-refresh/only-export-components': 'off'
+    }
   }
 );

@@ -533,12 +533,14 @@ export const VendorsPage: React.FC = () => {
       >
         <div className="overflow-x-auto py-2">
           <table className="w-full text-left text-xs border border-ivory-200 dark:border-charcoal-700 rounded-lg">
+            <caption className="sr-only">Side-by-side vendor quotation comparison matrix</caption>
             <thead className="bg-ivory-100/70 dark:bg-charcoal-800 text-charcoal-700 dark:text-ivory-100">
               <tr>
-                <th className="p-3 w-32 border-b border-ivory-200 dark:border-charcoal-700">Vendor</th>
+                <th scope="col" className="p-3 w-32 border-b border-ivory-200 dark:border-charcoal-700">Vendor</th>
                 {activeEvent.vendors.slice(0, 3).map((v) => (
                   <th
                     key={v.id}
+                    scope="col"
                     className="p-3 border-b border-ivory-200 dark:border-charcoal-700 font-bold"
                   >
                     <div>{v.name}</div>

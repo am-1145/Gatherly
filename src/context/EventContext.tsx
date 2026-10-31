@@ -92,6 +92,12 @@ interface EventContextType {
 
 const EventContext = createContext<EventContextType | undefined>(undefined);
 
+/**
+ * Primary React Context Provider managing multi-event workspace state, persistence, and live calculations.
+ *
+ * @param props.children - Child React nodes to receive event context values.
+ * @returns JSX Context Provider element wrapping the application tree.
+ */
 export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [events, setEvents] = useState<EventModel[]>(() => loadStoredEvents());
   const [activeEventId, setActiveEventIdState] = useState<string>(() =>
@@ -669,6 +675,12 @@ export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   );
 };
 
+/**
+ * React hook to consume the current active Event workspace, mutators, and computed real-time metrics.
+ *
+ * @returns EventContextType object providing activeEvent, event collections, mutator methods, and financial metrics.
+ * @throws Error when invoked outside an `<EventProvider>` component hierarchy.
+ */
 export function useEvent() {
   const context = useContext(EventContext);
   if (!context) {

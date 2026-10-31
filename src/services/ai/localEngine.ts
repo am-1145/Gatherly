@@ -8,6 +8,14 @@ export interface LocalEngineResult {
   intentTag: string;
 }
 
+/**
+ * Processes a user copilot query deterministically using an offline rule-based financial & planning engine.
+ * Employs domain heuristics calibrated to event type, headcounts, vendor quotations, and current allocations.
+ *
+ * @param prompt - Natural language query or user instruction.
+ * @param event - The active EventModel workspace state.
+ * @returns Comprehensive advice, optional actionable workspace mutation proposal, and suggested follow-up queries.
+ */
 export function processLocalCopilotPrompt(
   prompt: string,
   event: EventModel

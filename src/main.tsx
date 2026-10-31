@@ -6,7 +6,7 @@ import { SettingsProvider } from './context/SettingsContext';
 import './index.css';
 
 // Initialize Deque axe-core runtime accessibility auditing in development
-if ((import.meta as any).env?.DEV) {
+if ((import.meta as unknown as { env: { DEV: boolean } }).env?.DEV) {
   import('@axe-core/react').then((axe) => {
     axe.default(React, ReactDOM, 1000);
   });

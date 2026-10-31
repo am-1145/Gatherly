@@ -358,16 +358,17 @@ We can't wait to celebrate together! 🎉`;
       <Card padding="none" className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
+            <caption className="sr-only">Guest RSVP and attendance registry</caption>
             <thead className="bg-ivory-100/70 dark:bg-charcoal-800/60 text-charcoal-500 uppercase tracking-wider font-semibold border-b border-ivory-200 dark:border-charcoal-700">
               <tr>
-                <th className="py-3 px-4">Guest Name</th>
-                <th className="py-3 px-4">Contact</th>
-                <th className="py-3 px-4">Group</th>
-                <th className="py-3 px-4">RSVP Status</th>
-                <th className="py-3 px-4">Plus-Ones</th>
-                <th className="py-3 px-4">Diet</th>
-                <th className="py-3 px-4">Table / Area</th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th scope="col" className="py-3 px-4">Guest Name</th>
+                <th scope="col" className="py-3 px-4">Contact</th>
+                <th scope="col" className="py-3 px-4">Group</th>
+                <th scope="col" className="py-3 px-4">RSVP Status</th>
+                <th scope="col" className="py-3 px-4">Plus-Ones</th>
+                <th scope="col" className="py-3 px-4">Diet</th>
+                <th scope="col" className="py-3 px-4">Table / Area</th>
+                <th scope="col" className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-ivory-200 dark:divide-charcoal-800 text-charcoal-800 dark:text-charcoal-200">
@@ -483,7 +484,7 @@ We can't wait to celebrate together! 🎉`;
               </label>
               <select
                 value={group}
-                onChange={(e) => setGroup(e.target.value as any)}
+                onChange={(e) => setGroup(e.target.value as GuestItem['group'])}
                 className="w-full text-sm rounded-lg bg-white dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-700 p-2.5 text-charcoal-900 dark:text-ivory-100 focus:outline-none focus:ring-1 focus:ring-sage-500"
               >
                 <option value="Family">Family</option>

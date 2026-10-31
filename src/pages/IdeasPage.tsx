@@ -283,7 +283,7 @@ export const IdeasPage: React.FC = () => {
               </label>
               <select
                 value={ideaCategory}
-                onChange={(e) => setIdeaCategory(e.target.value as any)}
+                onChange={(e) => setIdeaCategory(e.target.value as IdeaItem['category'])}
                 className="w-full text-sm rounded-lg bg-white dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-700 p-2.5 text-charcoal-900 dark:text-ivory-100 focus:outline-none focus:ring-1 focus:ring-sage-500"
               >
                 <option value="decor">Decorations</option>

@@ -355,6 +355,10 @@ export const OverviewPage: React.FC = () => {
                   className="p-2.5 rounded-lg border border-ivory-200 dark:border-charcoal-700/80 bg-white dark:bg-charcoal-800 flex items-start gap-3 hover:border-charcoal-300 transition-colors"
                 >
                   <button
+                    type="button"
+                    role="checkbox"
+                    aria-checked={task.status === 'completed'}
+                    aria-label={`Mark "${task.title}" as ${task.status === 'completed' ? 'pending' : 'completed'}`}
                     onClick={() => toggleTaskStatus(task.id)}
                     className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center transition-colors ${
                       task.status === 'completed'

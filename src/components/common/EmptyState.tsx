@@ -10,6 +10,18 @@ export interface EmptyStateProps {
   className?: string;
 }
 
+/**
+ * Placeholder component rendered when lists or datasets are empty, offering an optional recovery action.
+ *
+ * @param props - Empty state parameters
+ * @param props.icon - Illustrative or semantic icon element
+ * @param props.title - Concise title heading explaining empty state
+ * @param props.description - Supportive description explaining what to do next
+ * @param props.actionLabel - Optional button label for initiating item creation
+ * @param props.onAction - Optional callback handler invoked when action button is clicked
+ * @param props.className - Additional utility classes
+ * @returns JSX.Element empty state card
+ */
 export const EmptyState: React.FC<EmptyStateProps> = ({
   icon,
   title,

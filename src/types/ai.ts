@@ -12,7 +12,7 @@ export interface ActionProposal {
   title: string;
   description: string;
   status: 'pending' | 'applied' | 'dismissed';
-  payload: any;
+  payload: Record<string, unknown>;
 }
 
 export interface ChatMessage {

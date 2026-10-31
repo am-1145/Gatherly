@@ -9,6 +9,17 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   rightIcon?: React.ReactNode;
 }
 
+/**
+ * Reusable, accessible UI Button component supporting variants, loading states, and icons.
+ *
+ * @param props - Button props including variant, size, loading state, and icons
+ * @param props.variant - Visual style preset ('primary', 'secondary', 'sage', 'outline', 'ghost', 'danger')
+ * @param props.size - Button dimension scale ('sm', 'md', 'lg')
+ * @param props.isLoading - Whether to show a spinner and disable interactions
+ * @param props.leftIcon - Optional icon element to render before button label
+ * @param props.rightIcon - Optional icon element to render after button label
+ * @returns JSX.Element button node with aria-busy and disabled attributes when appropriate
+ */
 export const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',

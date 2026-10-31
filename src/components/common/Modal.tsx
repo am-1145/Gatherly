@@ -12,6 +12,20 @@ export interface ModalProps {
   'aria-label'?: string;
 }
 
+/**
+ * Accessible dialog modal overlay with keyboard Escape handling, body scroll locking,
+ * and ARIA labelling / description bindings.
+ *
+ * @param props - Modal dialog properties
+ * @param props.isOpen - Whether the modal dialog is visible
+ * @param props.onClose - Callback triggered to dismiss the modal (e.g., backdrop click or Escape)
+ * @param props.title - Title header node displayed at the top of the dialog
+ * @param props.description - Optional subtitle / description referenced via aria-describedby
+ * @param props.children - Modal body content
+ * @param props.maxWidth - Horizontal constraint width ('sm', 'md', 'lg', 'xl', '2xl')
+ * @param props.showCloseButton - Whether to display top-right dismiss button
+ * @returns Accessible dialog modal or null if not open
+ */
 export const Modal: React.FC<ModalProps> = ({
   isOpen,
   onClose,

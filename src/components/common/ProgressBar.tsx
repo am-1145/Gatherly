@@ -8,6 +8,16 @@ export interface ProgressBarProps {
   className?: string;
 }
 
+/**
+ * Visual progress bar indicator with clamping, multiple color accents, and optional percentage readout.
+ *
+ * @param props - Progress bar configuration
+ * @param props.value - Numeric progress percentage between 0 and 100
+ * @param props.color - Theme color variant ('sage' | 'terracotta' | 'amber' | 'blue')
+ * @param props.size - Height bar scale ('sm' | 'md' | 'lg')
+ * @param props.showLabel - Whether to display a header showing label and clamped percentage
+ * @returns JSX.Element progress bar container
+ */
 export const ProgressBar: React.FC<ProgressBarProps> = ({
   value,
   color = 'sage',

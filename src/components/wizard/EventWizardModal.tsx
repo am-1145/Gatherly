@@ -156,7 +156,7 @@ export const EventWizardModal: React.FC<EventWizardModalProps> = ({
   const occasions: Array<{
     type: EventOccasion;
     label: string;
-    icon: any;
+    icon: React.ComponentType<{ className?: string }>;
     desc: string;
   }> = [
     { type: 'wedding', label: 'Wedding', icon: Heart, desc: 'Ceremonies, receptions, sangeet & rituals' },

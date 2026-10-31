@@ -20,6 +20,16 @@ interface HeaderProps {
   onOpenCopilotDrawer?: () => void;
 }
 
+/**
+ * Application top navigation bar featuring active workspace switcher, global search trigger,
+ * dark/light theme toggle, AI quick action, and notifications.
+ *
+ * @param props - Header configuration props
+ * @param props.onToggleMobileMenu - Handler to toggle mobile navigation drawer
+ * @param props.onOpenCreateWizard - Handler to open event creation modal
+ * @param props.onOpenCopilotDrawer - Optional handler to slide open Copilot drawer
+ * @returns JSX.Element top header component
+ */
 export const Header: React.FC<HeaderProps> = ({
   onToggleMobileMenu,
   onOpenCreateWizard,

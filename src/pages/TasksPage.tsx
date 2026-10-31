@@ -288,15 +288,16 @@ export const TasksPage: React.FC = () => {
         <Card padding="none" className="overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
+              <caption className="sr-only">Tasks and planning milestones list</caption>
               <thead className="bg-ivory-100/70 dark:bg-charcoal-800/60 text-charcoal-500 uppercase tracking-wider font-semibold border-b border-ivory-200 dark:border-charcoal-700">
                 <tr>
-                  <th className="py-3 px-4 w-12 text-center">Status</th>
-                  <th className="py-3 px-4">Task</th>
-                  <th className="py-3 px-4">Category</th>
-                  <th className="py-3 px-4">Due Date</th>
-                  <th className="py-3 px-4">Assignee</th>
-                  <th className="py-3 px-4">Priority</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
+                  <th scope="col" className="py-3 px-4 w-12 text-center">Status</th>
+                  <th scope="col" className="py-3 px-4">Task</th>
+                  <th scope="col" className="py-3 px-4">Category</th>
+                  <th scope="col" className="py-3 px-4">Due Date</th>
+                  <th scope="col" className="py-3 px-4">Assignee</th>
+                  <th scope="col" className="py-3 px-4">Priority</th>
+                  <th scope="col" className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-ivory-200 dark:divide-charcoal-800 text-charcoal-800 dark:text-charcoal-200">
@@ -318,6 +319,9 @@ export const TasksPage: React.FC = () => {
                       >
                         <td className="py-3 px-4 text-center">
                           <button
+                            role="checkbox"
+                            aria-checked={task.status === 'completed'}
+                            aria-label={`Toggle status for ${task.title}`}
                             onClick={() => toggleTaskStatus(task.id)}
                             className={`w-4 h-4 rounded border mx-auto flex items-center justify-center transition-colors ${
                               task.status === 'completed'
